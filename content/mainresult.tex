@@ -28,13 +28,11 @@ QPBO is exp-APX-complete.
 \begin{proofsketch} (Full proof in \cref{sec:formalproof}).
 \begin{enumerate}
 \item We observe that W3SAT-triv is known to be exp-APX-complete \cite{ausiello1999complexity}. W3SAT-triv is a 3-SAT problem with weights on the variables and an artificial, trivial solution.
-\item Each 3-clause in the conjunctive normal form can be represented as a polynomial consisting of three binary variables. Together with representing the weights with the unary terms, we arrive at a cubic Boolean minimization problem.
-\item We use the method of~\cite{ishikawa2011transformation} to transform the cubic Boolean problem into a quadratic one, with polynomially many additional variables, which is an instance of QPBO.
-\item Together with an inverse mapping $\sigma$ that we defined, the above transformation defines an AP-reduction from W3SAT-triv to QPBO, \ie W3SAT-triv $\leqAP$ QPBO. This proves that QPBO is exp-APX-hard.
+\item Each 3-clause in the conjunctive normal form can be represented as a polynomial consisting of three binary variables. Together with representing the weights with the unary terms, we arrive at a 3-label energy minimization problem.
+\item We use the method of~\cite{ishikawa2011transformation} to transform the 3-label problem into a 2-label one, with polynomially many additional variables, which is an instance of QPBO.
+\item The transformation defines an injective forward mapping $\pi$ and then we define a surjective inverse mapping $\sigma$ to set up the two-way correspondence between W3SAT-triv and the transformed QPBO.
+\item We prove that such mappings build an AP-reduction from W3SAT-triv to QPBO, \ie W3SAT-triv $\leqAP$ QPBO. This proves that QPBO is exp-APX-hard.
 \item We observe that all energy minimization problems are in exp-APX and thereby concluding that QPBO is exp-APX-complete.
-% \item The transformation defines an injective forward mapping $\pi$ and then we define a surjective inverse mapping $\sigma$ to set up the two-way correspondence between W3SAT-triv and the transformed QPBO.
-% \item We prove that such mappings build an AP-reduction from W3SAT-triv to QPBO, \ie W3SAT-triv $\leqAP$ QPBO. This proves that QPBO is exp-APX-hard.
-% \item We observe that all energy minimization problems are in exp-APX and thereby concluding that QPBO is exp-APX-complete.
 \end{enumerate}
 \end{proofsketch}
 % ::: If there is space, it would be good to flesh this proof sketch out a bit.  In particular, there i no intuition of what pi and sigma are in this brief sketch
@@ -50,23 +48,18 @@ $k$-label energy minimization is exp-APX-complete for $k \geq 2$.
 \begin{proofsketch}
 (Full proof in \cref{sec:formalproof}). This theorem is proved by showing QPBO $ \leqAP$ $k$-label energy minimization for $k \geq 2$.
 \end{proofsketch}
-We show in \cref{C:prob-approx} the inapproximability in energy (log probability) transfer to probability in Equation~\cref{p-approx-ratio} as well.
+%We show in \cref{C:prob-approx} the inapproximability in energy (log probability) transfer to probability in Equation~\cref{p-approx-ratio} as well.
 
-Taken together, this theorem and its corollaries form a very strong inapproximability result for general energy minimization \footnote{These results automatically generalize to higher order cases as they subsume the pairwise cases discussed here.}. They imply not only NP-hardness, but also that there is no algorithm that can approximate general energy minimization with two or more labels with an approximation ratio better than some exponential function in the input size. In other words, any approximation algorithm of the general energy minimization problem can perform arbitrarily badly, and it would be pointless to try to prove a bound on the approximation ratio for existing approximation algorithms for the general case.  While this conclusion is disappointing, these results serve as a clarification of grounds and guidance for model selection and algorithm design. Instead of counting on an oracle that solves the energy minimization problem, researchers should put efforts into selecting the proper formulation, trading off expressiveness for tractability.
+ Our result also implies inapproximablity of MAP in the measure of probability (as studied for directed networks by~\citet{Kwisthout-13}). For undirected models the probability is given by the associated Gibbs distribution: $p(x) = \exp(-E(x))$.
+ \begin{restatable}{corollary}{CprobApprox}\label{C:prob-approx}
+ It is NP-hard to find a solution $x^*$ to MAP such that $p(x^*)/p(x) < \exp(r(n))$ for any given polynomial $r$.
+ %\end{corollary}
+ \end{restatable}
+ \begin{proofsketch}
+ (Full proof in \cref{sec:formalproof}). Note that a ratio $r(n)$ in the energy leads to $\Theta(\exp(r(n)))$ for the ratio in probability.
+ \end{proofsketch}
 
-% Not enough space
-% Our result also implies inapproximablity of MAP inference in the measure of probability as studied for directed networks by~\citet{Kwisthout-13}. For undirected graphical models the probability is given by the associated Gibbs distribution: $p(x) = \exp(-f(x))$.
-% \begin{restatable}{corollary}{CprobApprox}\label{C:prob-approx}
-% It is NP-hard to find a solution $x^*$ to MAP such that $p(x^*)/p(x) < \exp(r(n))$ for any given polynomial $r$.
-% %\end{corollary}
-% \end{restatable}
-% \begin{proofsketch}
-% (Full proof in \cref{sec:formalproof}). Note that a ratio $r(n)$ in the energy leads to $\Theta(\exp(r(n)))$ for the ratio in probability.
-% \end{proofsketch}
- 
-% This above corollary precludes any polynomial-time MAP inference with meaningful probabilistic interpretation for general undirected graphical models.
-
-% For example, since QPBO is harder than MAXCUT it might be preferable to use MAXCUT as a model in a specific application or as a sub-problem solver in a general optimization algorithm.
+Taken together, this theorem and its corollaries form a very strong inapproximability result for general energy minimization. They imply not only NP-hardness, but also that there is no algorithm that can approximate general energy minimization with two or more labels with an approximation ratio being any polynomial in the input size. In other words, any approximation algorithm of the general energy minimization problem can perform arbitrarily badly, and it would be pointless to try to prove a bound on the approximation ratio for existing approximation algorithms for the general case.  While this conclusion is disappointing, these results serve as a clarification of grounds and guidance for model selection and algorithm design. Instead of counting on an oracle that solves the energy minimization problem, researchers should put efforts into selecting the proper formulation, trading off expressiveness for tractability. % For example, since QPBO is harder than MAXCUT it might be preferable to use MAXCUT as a model in a specific application or as a sub-problem solver in a general optimization algorithm.
 
 % Note all the above discussion (collorary 
 %In sum, these results amount to that any approximation algorithm of the general energy minimization problem can perform arbitrarily bad and it might be pointless to try to prove the approximation bound of existing approximation algorithms in the general case. 

@@ -19,7 +19,7 @@ Notice the assumption that the cost is positive, and, in particular, it cannot b
 
 %Analogous to NP and P for decision problems, we have NPO and PO for optimization problems:
 
-\begin{definition}[Class NPO, \cite{ausiello1999complexity} Def 1.17] An optimization problem $\P = (\I,\S,m, \text{goal})$ belongs to the class of NP optimization (NPO) problems if the following hold:
+\begin{definition}[Class NPO, \cite{ausiello1999complexity} Def 1.17] An optimization problem $\P = (\I,\S,m, \text{goal}$ $\in$ $\{\min , \max\} )$ belongs to the class of NP optimization (NPO) problems if the following hold:
 \begin{enumerate}
 \item The set of instances $\I$ is recognizable in polynomial time.
 \item There exists a polynomial $q$ such that given an instance $x\in\I$, for any $y\in \S(x)$, $|y| < q(x)$ and, besides, for any $y$ such that $|y| < q(x)$, it is decidable in polynomial time whether $y\in\S(x)$.
@@ -27,10 +27,10 @@ Notice the assumption that the cost is positive, and, in particular, it cannot b
 \end{enumerate}
 \end{definition}
 
-\begin{definition}[Class PO, \cite{ausiello1999complexity} Def 1.18] An optimization problem $\P$ belongs to the class of PO if it is in NPO and there exists a polynomial-time computable algorithm that, for any instance $x\in\I$, returns an optimal solution $y\in\S^*(x)$, together with its value $m^*(x)$.
+\begin{definition}[Class PO, \cite{ausiello1999complexity} Def 1.18] An optimization problem $\P$ belongs to the class of PO if it is in NPO and there exists a polynomial-time algorithm that, for any instance $x\in\I$, returns an optimal solution $y\in\S^*(x)$, together with its value $m^*(x)$.
 \end{definition}
 
-For intractable problems, it may be acceptable to seek an approximate solution that is sufficiently close to optimal.
+%For intractable problems, it may be acceptable to seek an approximate solution that is sufficiently close to optimal.
 
 \begin{definition}[Approximation Algorithm, \cite{ausiello1999complexity} Def. 3.1]Given an optimization problem $\P = (\I,\S,m,\text{goal})$ an algorithm $\A$ is an {\em approximation algorithm} for $\P$ if, for any given instance $x\in\I$, it returns an {\em approximate solution}, that is a feasible solution $\A(x) \in \S(x)$.
 \end{definition}
@@ -70,16 +70,16 @@ Since the measure $m$ needs to be computable in polynomial time for NPO problems
 The standard approach for proofs in complexity theory is to perform a reduction from a known NP-complete problem.  Unfortunately, the most common polynomial-time reductions ignore the quality of the solution in the approximated case. For example, it is shown that any energy minimization problem can be reduced to a factor 2 approximable Potts model \cite{prusa2015hard}, however the reduction is not approximation preserving and is unable to show the hardness of general energy minimization in terms of approximation. Therefore, it is necessary to use an approximation preserving (AP) reduction to classify NPO problems that are not in PO, for which only the approximation algorithms are tractable.  AP-preserving reductions preserve the approximation ratio in a linear fashion, and thus preserve the membership in these complexity classes.  Formally,
 
 \begin{definition}[AP-reduction, \cite{ausiello1999complexity} Def. 8.3]\label{def:AP-red}
-Let $\P_1$ and $\P_2$ be two problems in NPO. $\P_1$ is said to be AP-{\em reducible} to $\P_2$, in symbols $\P_1 \leqAP \P_2$, if two functions $\pi$ and $\sigma$ and a positive constant $\alpha$ exist such that \footnote{The complete definition contains a rational $r$ for the the two mappings ($\pi$ and $\sigma$) and it is omitted here for simplicity.}:
+Let $\P_1$ and $\P_2$ be two problems in NPO. $\P_1$ is said to be AP-{\em reducible} to $\P_2$, in symbols $\P_1 \leqAP \P_2$, if two functions $\pi$ and $\sigma$ and a positive constant $\alpha$ exist such that:
 \begin{enumerate}
-\item For any instance $x\in \I_1$, $\pi(x) \in \I_2$.
-\item For any instance $x\in \I_1$, if $S_1(x) \neq \emptyset$ then $S_2(\pi(x)) \neq \emptyset$.
-\item For any instance $x\in \I_1$ and for any $y \in S_2(\pi(x))$, $\sigma(x, y) \in S_1(x)$.
-\item $\pi$ and $\sigma$ are computable by algorithms whose running time is polynomial.
-\item For any instance $x\in \I_1$, for any rational $r > 1$, and for any $y \in S_2(\pi(x))$,
+\item For any instance $x\in \I_1$ and for any rational $r > 1$, $\pi(x, r) \in \I_2$.
+\item For any instance $x\in \I_1$ and for any rational $r > 1$, if $S_1(x) \neq \emptyset$ then $S_2(\pi(x,r)) \neq \emptyset$.
+\item For any instance $x\in \I_1$, for any rational $r > 1$ and for any $y \in S_2(\pi(x,r))$, $\sigma(x, y, r) \in S_1(x)$.
+\item $\pi$ and $\sigma$ are computable by algorithms whose running time is polynomial for any fixed rational $r$.
+\item For any instance $x\in \I_1$, for any rational $r > 1$, and for any $y \in S_2(\pi(x,r))$,
 \begin{align} \label{eq:AP-red}
-R_2(\pi(x),y) \leq r \quad \text{implies} \\
-R_1(x, \sigma(x, y)) \leq 1 + \alpha(r-1).
+R_2(\pi(x,r),y) \leq r \quad \text{implies} \\
+R_1(x, \sigma(x, y, r)) \leq 1 + \alpha(r-1).
 \end{align}
 \end{enumerate}
 \end{definition}

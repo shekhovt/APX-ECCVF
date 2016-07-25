@@ -11,7 +11,7 @@
 Much of the work on complexity in computer vision has focused on experimental or empirical comparison of inference methods, including influential studies on choosing the best optimization techniques for specific classes of energy minimization problems~\cite{Szeliski08-PAMI,kappes2015comparative} and the PASCAL Probabilistic Inference Challenge, which focused on the more general context of inference in graphical models~\cite{PIC}. In contrast, our work focuses on theoretical computational complexity, rather than experimental analysis.
 
 % Known results for NP-hardness not known for approximations
-On the theoretical side, the NP-hardness of certain energy minimization problems is well studied. It has been shown that 2-label energy minimization is, in general, NP-hard, but it can be in PO if it is submodular~\cite{Kolmogorov02:regular-pami} or outerplanar~\cite{Schraudolph-10}. For multi-label problems, the NP-hardness was proven by reduction from the NP-hard multi-way cut problem~\cite{boykov2001approximate}. These results, however, say nothing about the complexity of {\em approximating} the global optimum for the intractable cases. The complexity involving approximation has been studied for classical combinatorial problems, such as MAX-CUT and MAX-2SAT, which are known to be APX-complete~\cite{Papadimitriou-91}. QPBO generalizes such problems and is therefore APX-hard. This leaves a possibility that QPBO may be in APX, \ie, approximable within a constant factor.
+On the theoretical side, the NP-hardness of certain energy minimization problems is well studied. It has been shown that 2-label energy minimization is, in general, NP-hard, but it can be in PO if it is submodular~\cite{Kolmogorov02:regular-pami} or, \eg, outerplanar~\cite{Schraudolph-10}. For multi-label problems, the NP-hardness was proven by reduction from the NP-hard multi-way cut problem~\cite{boykov2001approximate}. These results, however, say nothing about the complexity of {\em approximating} the global optimum for the intractable cases. The complexity involving approximation has been studied for classical combinatorial problems, such as MAX-CUT and MAX-2SAT, which are known to be APX-complete~\cite{Papadimitriou-91}. QPBO generalizes such problems and is therefore APX-hard. This leaves a possibility that QPBO may be in APX, \ie, approximable within a constant factor.
 
 % It is well-known that QPBO is NP-hard, since it generalizes such problems as maximum cut and maximum 2-satisfiability~\cite{Karp-72}. 
 % These problems are also known to be APX-complete~\cite{Papadimitriou-91} (implies NP-hardness). Therefore, QPBO is APX-hard.
@@ -19,10 +19,10 @@ On the theoretical side, the NP-hardness of certain energy minimization problems
 
 % Results for directed graphical models (one measure)
 Energy minimization is often used to solve MAP inference for undirected graphical models. In contrast to scarce results for energy minimization and undirected graphical models, researchers have more extensively studied the computational complexity of approximating the MAP solution for {\em Bayesian networks}, also known as {\em directed graphical models}~\cite{kwisthout2015tree}. Abdelbar and Hedetniemi first proved the NP-hardness for approximating the MAP assignment of directed graphical models in the value of probability, \ie, finding $x$ such that
-\begin{align}\label{p-approx-ratio}
-\frac{p(x^*)}{p(x)} \leq r(n)
-\end{align}
-% $p(x^*)/ p(x) \leq r(n)$
+%\begin{align}\label{p-approx-ratio}
+%\frac{p(x^*)}{p(x)} \leq r(n)
+%\end{align}
+$p(x^*)/ p(x) \leq r(n)$
 with a constant or polynomial ratio $r(n) \geq 1$ is NP-hard, showing that this problem is poly-APX-hard~\cite{Abdelbar-98}. 
 % ::: can we remove the following statement and footnote?  Is it really relevant to the related work here?
 %This result holds even after restricting to binary variables and factors of order 3.\footnote{\citet[\parSym 6.1]{Abdelbar-98} count incoming edges of the network: for a factor $p(x_1 | x_2,x_3)$ there are two, but the total number of variables it couples is 3.} 
@@ -45,9 +45,7 @@ He also investigated the hardness of expectation-approximation of MAP, and found
 %More recently, the hardness of MAP inference is studied in various approximation measures. Aside from ratio approximation, the NP-hardness has been shown for additive value-approximation of MAP \citet{Kwisthout-11}, structure-approximation of MAP \citet{Kwisthout-13}, rank-approximation of MAP \cite{kwisthout2015tree}. \citet{kwisthout2015tree} also investigated the hardness of expectation-approximation of MAP, and the finding is that no randomized algorithm can expectation-approximate MAP in polynomial time with bounded margin of error unless NP $\subseteq$ BPP, an assumption that is highly unlikely to be true.
 
 % How is what we're doing different?
-Unfortunately, the complexity results for directed models do not readily transfer to undirected models and vice versa. In directed and undirected models, the graph represents different conditional independence relations, thus the underlying family of probability distributions encoded by these two models is distinct.
-%, as detailed in Section~\ref{sec:BayesNet}.
-However, one can ask similar questions on the hardness of undirected models in terms of various approximation measures. In this work, we answer two questions, ``How hard is it to approximate the MAP inference in the ratio of energy (log probability) and the ratio of probability?'' The complexity of structure-, rank-, and expectation-approximation remain open questions for energy minimization.
+Unfortunately, the complexity results for directed models do not readily transfer to undirected models and vice versa. In directed and undirected models, the graph represents different conditional independence relations, thus the underlying family of probability distributions encoded by these two models is distinct, as detailed in Section~\ref{sec:BayesNet}. However, one can ask similar questions on the hardness of undirected models in terms of various approximation measures. In this work, we answer two questions, ``How hard is it to approximate the MAP inference in the ratio of energy (log probability) and the ratio of probability?'' The complexity of structure-, rank-, and expectation-approximation remain open questions for energy minimization.
 
 
 % ::: removed text:  which results in a complexity claims that may sound contradictory (see~\autoref{fig-differences}). Roughly, NPO class by~\citet{Orponen90onapproximation} matches exp-APX class by~\citet{approx99}.
