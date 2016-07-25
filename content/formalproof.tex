@@ -1,0 +1,300 @@
+\section{Formal Proofs}\label{sec:formalproof}
+
+%proofs and additional corollaries
+
+Note for all proofs in this section, we represent the forward and reverse mappings in AP-reduction, as $\pi(\cdot)$ and $\sigma(\cdot,\cdot)$ instead of $\pi(\cdot,\cdot)$ and $\sigma(\cdot,\cdot,\cdot)$, since the mappings used here do not depend on the rational $r$ in \cref{def:AP-red}. Also, we assign integer values to Boolean functions: 0 for False and 1 for True.
+
+\subsection{General Case}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Tmain*
+\begin{proof}
+We reduce from the following problem.
+\begin{problem}[\cite{ausiello1999complexity}, Section 8.3.2]{\bf W3SAT-triv}
+\begin{itemize}
+\item[\sc instance:] Boolean CNF formula $F$ with variables $x_1,\cdots,x_n$ and each clause assuming exactly 3 variables; non-negative integer weights $w_1,\cdots, w_n$.
+\item[\sc solution:] Truth assignment $\tau$ to the variables that either satisfies $F$ or assigns the trivial, all-true assignment.
+\item[\sc measure:] $\min \sum_{i=1}^n w_i \tau(x_i)$.
+\end{itemize}
+\end{problem}
+
+%(of \cref{th:main}) 
+W3SAT-triv is known to be exp-APX-complete \cite{ausiello1999complexity}. We use an AP-reduction from W3SAT-triv to prove the same completeness result for QPBO. The optimal value of W3SAT-triv is upper bounded by $M := \sum_{i}w_i$ because the all-true assignment is feasible.
+% L not explained
+% The length of $M$ is linear in the length of instance $L$.
+The objective weight is represented in QPBO as unary terms $f_i(x_i) = w_i x_i$. 
+For every Boolean clause $C(x_i,x_j,x_k) \in F$ we construct a triple-wise term
+\begin{align}
+\phi_{ijk}(x_i,x_j,x_k) = M(1-C(x_i,x_j,x_k)).
+\end{align}
+This term takes the large value $M$ iff $C$ is not satisfied and $0$ otherwise. Further, the Boolean clause $C(x_i,x_j,x_k)$ can be represented uniquely as a multi-linear cubic polynomial. For example, a clause $x_1 \lor {\bar x}_2 \lor {\bar x}_3$ can be represented as
+\begin{align}
+    1 - (1 - x_1) x_2 x_3 = x_1 x_2 x_3 - x_2 x_3 + 1.
+\end{align}
+Then we obtain similar representation with a single third order term and a second order multi-linear polynomial for $\phi_{ijk}$:
+\begin{align}
+\phi_{ijk} = M(a x_i x_j x_k + \sum_{J} b_{J} \prod_{l\in J} x_l),
+\end{align}
+where $J\subseteq \{i,j,k\}, |J|\leq 2$, $\prod_{l\in J} x_l$ is set to 1 if $J$ is empty, $a \in \{-1, 1\}$, and $b_{J} \in \{-1, 0, 1\}$. We now apply the quadratization techniques \cite{ishikawa2011transformation} to $\phi_{ijk}$. After introducing an auxiliary variable $x_w$ with $w > n$, we observe the following identities:
+\begin{align}
+-x_i x_j x_k & = \min_{x_w\in \{0, 1\}} -x_w (x_i+x_j+x_k-2) \\
+x_i x_j x_k & =  \min_{x_w\in \{0, 1\}} \big( (x_w{-}1) (x_i{+}x_j{+}x_k{-}1) + (x_i x_j{+}x_i x_k{+}x_j x_k) \Big)
+\end{align}
+In either case, substituting the cubic term $a x_i x_j x_k$ in $\phi_{ijk}$ with the expression inside the min operator, we can have a unified quadratic form
+\begin{align}
+\psi_{ijk} := M \sum_{J_w}b_{J_w}\prod_{l\in J_w} x_l,
+\end{align}
+where $J_w \subseteq \{i, j, k, w\}, |J_w|\leq 2$ and $\prod_{i\in J_w} x_i$ is set to 1 if $J_w$ is empty. In both cases, the quadratic form takes the same optimal values as its cubic counterpart given the optimal assignment, i.e.,
+\begin{align}
+ \min_{x_i, x_j, x_k, x_w} \psi_{ijk} = \min_{x_i, x_j, x_k} \phi_{ijk},
+\end{align}
+but the transformation expands the original range of the cubic term from $\{-1, 0\}$ to $\{-1, 0, 1, 2\}$ and from $\{0, 1\}$ to $\{0, 1, 3\}$ respectively for $a = -1$ and $a = 1$. Therefore, the cost of the constructed instance of QPBO is bounded in the absolute value by $3M$ and the number of added variables is exactly the number of clauses in $F$. Clearly, this construction can be computed in polynomial time. {\em Note that when approximation is used, this transformation is no longer exact ($\psi_{ijk} \neq \phi_{ijk}$), as the optimality of the auxiliary variable $x_w$ cannot be guaranteed. However, it can be verified that under all possible assignments (ignoring the min operator) in either case, $\psi_{ijk} \geq 0$, which is the key for the reduction to be an approximation preserving (AP) one.}
+
+The construction above defines a mapping $\pi$ from any instance of W3SAT-triv ($p_1 \in I_1$) to an instance of QPBO ($p_2 \in I_2$). The mapping $\sigma$ from feasible solutions of $p_2$ ($x \in S_2(p_2)$) to that of $p_1$ is defined as follows: if $f(x) \geq M$, then let the mapped solution $\sigma(p_1, x)$ be the all true assignment, otherwise let the mapped solution $\sigma(p_1, x)$ be $x_i, i \in \{1, ..., n\}$. 
+
+Now, we need to show that $(\pi,\sigma)$ together with a constant $\alpha$ is an AP-reduction. 
+% For simplicity, we omit the irrelevant number number $r$ required in  Definition \ref{def:AP-red}, and 
+Let $m_1$, $m_2$, $m_1^*$ and $m_2^*$ to be short for $m_1(p_1, \sigma(p_1, x))$, $m_2(p_2)$, $m_1^*(p_1)$, and $m_2^*(\pi(p_2))$ respectively, where $*$ indicates the optimal solution.  First, note that $\sigma(p_1, x)$ is always feasible for {\em W3SAT}-triv: either it satisfies $F$ or $f(x) \geq M$ and therefore $\sigma(p_1, x)$ is the all-true assignment. In the first case, since every quadratic term is non-negative, we have
+\begin{align}
+& m_1 = \sum_{i=1}^n x_i w_i \\
+& \leq \sum_{i=1}^n x_i w_i + \sum_{C_{ijk} \in F} \psi_{ijk}(x_i,x_j,x_k) = f(x) = m_2.
+\end{align}
+In the second case, by construction
+\begin{align}
+m_1= M \leq f(x) = m_2.
+\end{align}
+Therefore, no matter which case $m_1 \leq m_2$.
+\par
+Now for the optimal solution, if $F$ is satisfiable, then by construction $m_1^* = m_2^*$. Recall from \cref{def:ratio}, $R = m/m^*$. 
+For any instance $p_1 \in I_1$, for any rational $r > 1$, and for any $x \in S_2(p_2)$, if
+\begin{align}
+R_2(p_2, x) \leq r,
+\end{align}
+then
+\begin{align}
+m_1 \leq m_2 \leq rm_2^* = rm_1^* \\
+R_1(p_1, \sigma(p_1, x)) = \frac{m_1}{m_1^*} \leq r
+\end{align}
+If $F$ is not satisfiable, $m_1^* = M \leq m_2^*$ and $m_2 \geq m_2* \geq M$. Thus, for any instance $p_1 \in I_1$, for any rational $r > 1$, and for any $x \in S_2(p_2)$,
+\begin{align}
+R_1(p_1, \sigma(p_1, x)) = \frac{m_1}{m_1^*} = \frac{M}{M} = 1 \leq r
+\end{align}
+Therefore $(\pi,\sigma, 1)$ is an AP-reduction. Since W3SAT-triv is exp-APX-complete and QPBO is in exp-APX, we prove that QPBO is exp-APX-complete.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Cgen*
+\begin{proof}
+We create an AP-reduction from QPBO to $k$-label energy minimization by setting up the unary and pairwise terms to discourage a labeling with the additional $k - 2$ labels.
+
+Denote QPBO as $ \P_1 = (\I_1, \S_1, m_1, \text{MIN})$ and $k$-label energy minimization as $ \P_2 = (\I_2, \S_2, m_2, \text{MIN})$.
+Given an instance $p_1 = (\G = (\V, \E), \L_1, f) \in \I_1$, let $M(p_1)$ be a large number such that all for all ${\bf x}_1 \in \S_1$, $m_1 < M$. For example, we can let 
+\begin{align}
+    M = \sum_{u \in \V}\sum_{x_u \in \L_1}|f_u(x_u)| + \sum_{(u, v) \in \E}\sum_{x_u \in \L_1}\sum_{x_v \in \L_1}|f_{uv}(x_u, x_v)| + 1. \label{eq:m}
+\end{align}
+
+We define the forward mapping $\pi$ from any $p_1 \in I_1$ to $p_2 = (\G = (\V, \E), \L_2, g) \in I_2$ as follows:
+\begin{itemize}
+    \item $g_u(a) = f_u(a)$, for $\forall a \in \L_1$, and $\forall u \in \V$;
+    \item $g_u(a) = M$, for $\forall a \notin \L_1$, and $\forall u \in \V$;
+    \item $g_{uv}(a, b) = f_{uv}(a,b)$, for $\forall a, b \in \L_1$, and $\forall (u, v) \in \E$;
+    \item $g_{uv}(a, b) = M$ if either $a$ or $b$ $\notin \L_1$ for $\forall (u, v) \in \E$.
+\end{itemize}
+    
+This setup has two properties:
+\begin{itemize}
+    \item $m_2 \geq M$ if and only if the labeling ${\bf x}_2 \in \S_2$ includes labels that are not in $\L_1$;
+    \item $m_1^*$ = $m_2^*$, for any $p_1$ and $p_2 = \pi(p_1)$.
+\end{itemize}
+
+Then we define the reverse mapping $\sigma$ from any $(p_2, {\bf x}_2)$ to ${\bf x}_1 \in \S_1$ to be
+\begin{itemize}
+    \item ${\bf x}_1$ = ${\bf x}_2$, if $m_2 < M$;
+    \item ${\bf x}_1$ be any fixed feasible solution (e.g., all nodes are labeled as the first label), if $m_2 \geq M$.
+\end{itemize}
+
+Observe that in both cases, $m_1 \leq m_2$. For any instance $p_1 \in I_1$, for any rational $r > 1$, and for any ${\bf x}_2 \in S_2$, if
+\begin{align}
+R_2(p_2, {\bf x}_2) = \frac{m_2}{m_2^*} \leq r,
+\end{align}
+then
+\begin{align}
+m_1 \leq m_2 \leq rm_2^* = rm_1^* \\
+R_1(p_1, {\bf x}_1) = \frac{m_1}{m_1^*} \leq r
+\end{align}
+Therefore $(\pi,\sigma, 1)$ is an AP-reduction. As QPBO is exp-APX-complete and all energy minimization problems are in exp-APX, we conclude that $k$-label energy minimization is exp-APX-complete for $k \geq 2$.
+\end{proof}
+
+The above construction also formally shows that the energy minimization problem can only become harder when having a larger labeling space, irrespective of the graph structure and the interaction type.
+
+The next result is used in Section~\ref{sec:apx}.
+\stepcounter{theorem}
+\begin{corollary} \label{C:label-approx}
+% ** decided to replace the original corollary with this one
+% this is actually a lemma instead of a corollary, however this corollary is already referred to in the main text
+An $O(\log k)$-approximation implies an $O(\log |x|)$-approximation for $k$-label energy minimization problems.
+\end{corollary}
+\begin{proof}
+Observe that an instance of the energy minimization problem \cref{eq:1} is completely specified by a set of all unary terms $f_u$ and pairwise terms $f_{uv}$. This defines a natural encoding scheme to describe an instance of an energy minimization problem with binary alphabet $\{0, 1\}$. Therefore, the input size
+\begin{align}
+|x| = O(k^2|V|^2).
+\end{align}
+Assume we have an r-approximation algorithm, and $r = O(\log k)$, then
+\begin{align}
+    r = O(\log k + \log |V|) = O(\log k|V|) = O(log|x|),
+\end{align}
+which implies an $O(\log |x|)$-approximation algorithm.
+
+\end{proof}
+
+
+% \ClabelApprox* \label{pf:ClabelApprox}
+% \begin{proof}
+% We prove by contradiction. First observe that to encode  $f_u(x_u)$, we require at least $|\V|*k$ entries, a number that can be at most polynomial in the input size for the problem instance to be recognized in polynomial time. Thus $k$ is at most polynomial in the input size as well. If there exist an approximation algorithm with ratio $r$ which is asymptotically smaller or equal to a polynomial in $k$, then it amounts
+% \begin{align}
+%     r = O(poly(k)) = O(poly(poly(|x|)) = O(poly(|x|)),
+% \end{align}
+% which contradicts the fact that the general energy minimization is exp-APX-complete.
+% \end{proof}
+
+
+% ** Decided to remove the following corollary
+
+% To show that exp-APX-completeness is a very strong inapproximability result, we introduce the corollary below, which effectively says that is impossible to obtain an efficient constant ratio approximation even when the number of nodes $|\V|$ in the underlying graph $\G$ is upper bounded by a constant.
+
+% \begin{corollary}
+% There is no polynomial time algorithm that can approximate $k$-label energy minimization with an approximation ratio in polynomial or sub-polynomial function class in $k$, when $|\V| = O(1)$.
+% \end{corollary}
+% \begin{proof}
+% Observe that an instance of the energy minimization problem \cref{eq:1} is completely specified by a set of all unary terms $f_u$, and pairwise terms $f_{uv}$. This defines a natural encoding scheme to describe an instance of energy minimization problems with with binary alphabet ${0, 1}$. Therefore, the input size
+% \begin{align}
+% |x| = O(k^2|V|^2).
+% \end{align}
+% Or 
+% As we restrict our discussion to problems in NPO, the input string must be recognizable in polynomial time. Therefore, the $|x| = O(poly(k))$ and thus is.
+% The natural encoding scheme to describe a energy minimization problems is to store all energy terms
+% To encode an energy minimization problem with binary alphabet ${0, 1}$, 
+% The input size $|x|$
+
+% We prove by contradiction. First observe that to encode  $f_u(x_u)$, we require at least $|\V|*k$ entries, a number that can be at most polynomial in the input size for the problem instance to be recognized in polynomial time. Thus $k$ is at most polynomial in the input size as well. If there exist an approximation algorithm with ratio $r$ which is asymptotically smaller or equal to a polynomial in $k$, then it amounts
+% \begin{align}
+%     r = O(poly(k)) = O(poly(poly(|x|)) = O(poly(|x|)),
+% \end{align}
+% which contradicts the fact that the general energy minimization is exp-APX-complete.
+% \end{proof}
+
+
+\subsection{Planar Case}\label{sec:prfplanar}
+
+% The {\em crossing number} ${\rm cr}(G)$ of a graph $G$ is the lowest number of edge crossings of a plane drawing of the graph $G$.
+% \begin{fact} \footnote{The tightest known upper bound is better, but asymptotically it is still $\Omega(n^4)$, see \url{https://en.wikipedia.org/wiki/Crossing_number_(graph_theory)}} 
+% The crossing number of a graph with $n$ vertices is upper bounded by $n^4$.
+% \end{fact}
+
+\Tplanar*
+\begin{proof}
+
+% Draft!
+% The AP-reducibility can be easily verified after observing these facts
+% The reverse mapping is multiple to one mapping (for generalization it is one to one).
+% The optimal measure are the same for ALL corresponding feasible solutions.
+% m1 <= m2 all the time!
+% thus R1 <= R2 <= r, alpha = 1
+% And this same idea goes to all our theorems for generalizing from k labels to more labels.
+
+% M does not need to be infinity, just large enough is OK
+
+We create an AP-reduction from 3-label energy minimization to planar 3-label energy minimization by introducing polynomially many auxiliary nodes and edges.
+
+Denote 3-label energy minimization as $ \P_1 = (\I_1, \S_1, m_1, \text{MIN})$ and planar 3-label energy minimization as $\P_2 = (\I_2, \S_2, m_2, \text{MIN})$.
+Given an instance $p_1 \in \I_1$, we compute a large number $M(p_1)$ as in Equation~\cref{eq:m} in the proof for \cref{C:gen}.
+
+The gadget-based reduction presented in Section~\ref{sec:plcase}, defines a forward mapping $\pi$ from any $p_1 = (\G_1 = (\V_1, \E_1), \L, f) \in I_1$ to $p_2 = (\G_2 = (\V_2, \E_2), \L, g) \in I_2$. Let $\V_3$ be the nodes added during the reduction, then $\V_2 = \V_1 \cup \V_3$. The two gadgets {\sc Split} and {\sc UncrossCopy} are used 4 times each to replace an edge crossing (point of intersection not at end points) with a planar representation (Figure~\ref{fig:planarreduct}), introducing 22 auxiliary nodes. Since the gadgets can be drawn arbitrarily small so that they are not intersecting with any other edges, we can repeatedly replace all edge crossings in $\G_1$ with this representation. There can be up to $O(|\E_1|^2)$ edge crossings,
+and we have $|V_3|$ = $O(|\E_1|^2)$.
+% \citeauthor{prusa2015universality} presented a polynomial time planar reduction method given a constant time construction to uncross a single edge crossing \cite{prusa2015universality}. 
+Given that the reduction adds only a polynomial number of auxiliary nodes, the forward mapping $\pi$ can be computed by a polynomial time algorithm.
+
+This setup has two properties:
+\begin{itemize}
+    \item $m_2 \leq M$ if and only if the labeling ${\bf x}_1$ is the same as the partial labeling in ${\bf x}_2$ restricting to nodes in $\V_1$ in $\G_2$.
+    \item $m_1^*$ = $m_2^*$, for any $p_1$ and $p_2 = \pi(p_1)$.
+\end{itemize}
+
+Then we define the reverse mapping $\sigma$ from any $(p_2, {\bf x}_2)$ to ${\bf x}_1 \in \S_1$ to be
+\begin{itemize}
+    \item ${\bf x}_1$ = ${\bf x}_2$, if $m_2 < M$;
+    \item ${\bf x}_1$ be any fixed feasible solution (e.g., all nodes are labeled as the first label), if $m_2 \geq M$.
+\end{itemize}
+
+Observe that in both cases, $m_1 \leq m_2$. 
+For any instance $p_1 \in I_1$, for any rational $r > 1$, and for any ${\bf x}_2 \in S_2$, if
+\begin{align}
+R_2(p_2, {\bf x}_2) = \frac{m_2}{m_2^*} \leq r,
+\end{align}
+then
+\begin{align}
+m_1 \leq m_2 \leq rm_2^* = rm_1^* \\
+R_1(p_1, {\bf x}_1) = \frac{m_1}{m_1^*} \leq r
+\end{align}
+Therefore $(\pi,\sigma, 1)$ is an AP-reduction. As 3-label energy minimization is exp-APX-complete (\cref{C:gen}) and all energy minimization problems are in exp-APX, we conclude that planar 3-label energy minimization is exp-APX-complete.
+
+\end{proof}
+
+\Cplanark*
+\begin{proof}
+The proof of \cref{C:gen} is graph structure independent. Therefore, the same proof applies here.
+\end{proof}
+
+
+\section{Relation to Bayesian Networks}\label{sec:BayesNet}
+There are substantial differences between results for Bayesian networks~\cite{Abdelbar-98} and our result.
+Bayesian networks have a probability density function $p(x)$ that factors according to a directed acyclic graph, \eg, as $p(x_1,x_2,x_3) = p(x_1 | x_2,x_3)p(x_2)p(x_3)$.
+Finding the MAP assignment (same as the most probable estimate (MPE)) in a Bayesian network is related to energy minimization~\eqref{eq:1} by letting $f(x) = -\log(p(x))$. The product is transformed into the sum and so, \eg, factor $p(x_1 | x_2,x_3)$ corresponds to term $f_{1,2,3}(x_1,x_2,x_3)$.
+\par
+The inapproximability result of~\citet{Abdelbar-98} holds even when restricting to binary variables and factors of order three. However, \cite[Section 6.1]{Abdelbar-98} count incoming edges of the network. For a factor $p(x_1 | x_2,x_3)$, there are two, but the total number of variables it couples is three and therefore such a network does not correspond to QPBO. If one restricts to factors of at most two variables, \eg, $p(x_1 | x_2)$, in a Bayesian network, then only tree-structured models can be represented, which are easily solvable. 
+\par
+In the other direction, representing pairwise energy~\eqref{eq:1} as a Bayesian network may require to use factors of order up to $|V|$ composed of conditional probabilities of the form $p(x_i \mid x_j, x_k, \cdots )$ with the number of variables depending on the vertex degrees. It is seen that while the general problems are convertible, fixed-parameter classes (such as order and graph restrictions) differ significantly. In addition, the approximation ratio for probabilities translates to an absolute approximation (an additive bound) for energies. The next corollary of our main result illustrates this point.
+
+% \begin{corollary}\label{C:prob-approx}
+% It is NP-hard to approximate MAP in the value of probability~\eqref{p-approx-ratio} with any exponential ratio $\exp(r(n))$, where $r$ is polynomial.
+% \end{corollary}
+
+\CprobApprox*
+\begin{proof}
+Recall that the probability $p(x)$ is given by the exponential map of the energy: $p(x) = \exp(-f(x))$. Assume for contradiction that there is a polynomial time algorithm $\A$ that finds solution $x$ and a polynomial $r(n) \geq 0$ for $n > 0$ such that
+\begin{align}
+\frac{p(x^*)}{p(x)} \leq e^{r(n)}
+\end{align}
+for all instances of the problem.
+%Then
+%\begin{align}
+%\frac{e^{-f(x^*)}}{e^{-f(x)}} \leq e^{r(n)}.
+%\end{align}
+Taking the logarithm,
+\begin{align}
+-f(x^*) + f(x) \leq r(n).
+\end{align}
+or, 
+\begin{align}
+f(x) \leq r(n) + f(x^*).
+\end{align}
+Divide by $f(x^*)$, which, by definition of NPO is positive, we obtain
+\begin{align}\label{f-approx}
+\frac{f(x)}{f(x^*)} \leq 1 + \frac{1}{f(x^*)}r(n) \leq 1 + r(n).
+\end{align}
+where we have used that $f(x^*)$ is integer and positive and hence it is greater or equal to 1. Inequality~\eqref{f-approx} provides a polynomial ratio approximation for energy minimization. Since the latter is exp-APX-complete (\cref{C:gen}), this contradicts existence of the polynomial algorithm $\A$, unless P = NP.
+\end{proof}
+
+Note, this corollary provides a stronger inapproximability result for probabilities than was proven in~\cite{Abdelbar-98}.
+
+% ::: how is this relevant to this proof?
+\begin{remark}~\citet{Abdelbar-98} have shown also the following interesting facts. For Bayesian networks, the following problems are also APX-hard (in the value of probability):
+\begin{itemize}
+\item Given the optimal solution, approximate the second best solution;
+\item Given the optimal solution, approximate the optimal solution conditioned on changing the assignment of one variable.
+\end{itemize}
+\end{remark}
+
+%  proof works not only for polynomial r(n), but any subexponential function, but larger than exp(poly) can not be computed in polynomial time, which means this problem is really inapproximable

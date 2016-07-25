@@ -1,0 +1,31 @@
+\begin{abstract}
+
+
+Discrete energy minimization is widely-used in computer vision and machine learning for problems such as MAP inference in graphical models. 
+The problem, in general, is notoriously intractable, and finding the global optimal solution is well-known to be NP-hard.
+However, is it possible to approximate this problem with a reasonable ratio bound on the solution quality in polynomial time?
+%Previous research has identified several special cases for which it is so, \eg, Potts model is NP-hard but approximable with a ratio bound of 2, \etc. 
+In this paper we prove a negative result. % -- inapproximability of two rather narrow cases of energy minimization. 
+Specifically, we show that both: pairwise energy minimization with two labels (aka pseudo-Boolean optimization) and planar energy minimization with three labels are complete in the complexity class exp-APX. This efficiently forbids the existence of any polynomial-time approximation algorithm with a sub-exponential approximation ratio in the input size of these problem's instances.
+%(in particular constant factor approximations) unless P $\neq$ NP. 
+Any problem which is more general (multi-label, higher order, \etc) is automatically also inapproximable.
+%, \eg, multi-label pairwise or higher order, is automatically at least as hard to approximate.
+
+As an auxiliary contribution, we collect and review complexities of different energy minimization subclasses utilized in computer vision and
+%we collect and review the computational complexity of several subclass problems 
+arrange them on a complexity scale consisting of three major classes -- PO, APX, and exp-APX, corresponding to problems that are solvable, approximable, and inapproximable in polynomial time. We argue that the merit of complexity beyond P/NP conveys an important information for possible practical applicability and algorithm design.
+
+%Problems in the first two complexity classes can serve as alternative tractable formulations to the inapproximable ones. %This paper can help vision researchers to select an appropriate model for an application or guide them in designing new algorithms.
+
+%following negative results: as soon as the class of problems subsumes pairwise energy minimization with 2 labels (aka quadratic pseudo-Boolean optimization) or a pairwise energy minimization with 3 labels on a planar graph, it is not tractable to approximate.
+%We show in this paper that the answer is no.  Specifically, 
+
+%Moreover, we collect and review the computational complexity of several subclass problems and arrange them on a complexity scale consisting of three major complexity classes -- PO, APX, and exp-APX, corresponding to problems that are solvable, approximable, and inapproximable in polynomial time. Problems in the first two complexity classes can serve as alternative tractable formulations to the inapproximable ones. This paper can help vision researchers to select an appropriate model for an application or guide them in designing new algorithms. 
+
+% Discrete energy minimization is widely-used in computer vision and machine learning for problems such as MAP inference for graphical models.  The problem, in general, is notoriously intractable, and finding the global optimal solution is known to be NP-hard. However, is it possible to approximate this problem with a reasonable ratio bound on the solution quality in polynomial time?  We show in this paper that the answer is no.  Specifically, we show that general energy minimization and planar energy minimization with three or more labels are exp-APX-complete.  This finding rules out the existence of any approximation algorithm with a sub-exponential approximation ratio in the input size for these two problems, including constant factor approximations. Moreover, we collect and review the computational complexity of several subclass problems and arrange them on a complexity scale consisting of three major complexity classes -- PO, APX, and exp-APX, corresponding to problems that are solvable, approximable, and inapproximable in polynomial time. Problems in the first two complexity classes can serve as alternative tractable formulations to the inapproximable ones. This paper can help vision researchers to select an appropriate model for an application or guide them in designing new algorithms. 
+
+
+\keywords{Energy minimization, complexity, NP-hard, APX, exp-APX, NPO, WCSP, min-sum, MAP MRF, planar graph}
+
+\end{abstract}
+

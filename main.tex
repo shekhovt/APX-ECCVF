@@ -1,0 +1,132 @@
+%\documentclass[10pt,twocolumn,letterpaper]{article}
+\documentclass[runningheads]{llncs}
+\usepackage[width=122mm,left=12mm,paperwidth=146mm,height=193mm,top=12mm,paperheight=217mm]{geometry}
+
+\usepackage[tocindentauto]{tocstyle}
+% \usepackage{cvpr-ruler-l}
+% 
+\input{style/packages.tex}
+
+% \usepackage{ruler}
+% \usepackage{authblk}
+
+% \let\classtableofcontents\tableofcontents%
+
+% \renewcommand{\tableofcontents}{%
+%   \begingroup%
+%   \xpatchcmd{\chapter}{\thispagestyle{empty}}{}{}{}%
+%   \classtableofcontents%
+%   \endgroup%
+% }
+
+%\usepackage{cvpr}
+%\usepackage{times}
+%\usepackage{epsfig}
+%\usepackage{graphicx}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+% Add by Martin
+%\usepackage{amsthm}
+%\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+%\input{style/tex_defs.tex}
+%\input{style/myspace.tex}
+
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+%\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\begin{document}
+%%ECCV%%%%%%%%%%%%%%%%
+\pagestyle{headings}
+\mainmatter
+\def\ECCV16SubNumber{1}  % Insert your submission number here
+%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%% TITLE
+\title{Complexity of Discrete Energy Minimization Problems}
+
+% \titlerunning{ECCV-16 submission ID \ECCV16SubNumber}
+% \authorrunning{ECCV-16 submission ID \ECCV16SubNumber}
+
+% \author{Anonymous ECCV submission}
+% \institute{Paper ID \ECCV16SubNumber}
+
+
+\author{Mengtian Li\textsuperscript{ 1} \qquad Alexander Shekhovtsov\textsuperscript{ 2} \qquad Daniel Huber\textsuperscript{ 1}}
+\institute{\textsuperscript{ 1}The Robotics Institute, Carnegie Mellon University\\\textsuperscript{ 2}Institute for Computer Graphics and Vision, Graz University of Technology}
+
+\authorrunning{Mengtian Li, Alexander Shekhovtsov and Daniel Huber}
+
+%%% Not compatible
+% \author[1]{Mengtian Li}
+% \author[2]{Alexander Shekhovtsov}
+% \author[1]{Daniel Huber}
+% \affil[1]{The Robotics Institute, Carnegie Mellon University}
+% \affil[2]{Institute for Computer Graphics and Vision, Graz University of Technology}
+
+
+% \author{Mengtian Li\\
+% Carnegie Mellon University\\
+% The Robotics Institute\\
+% {\tt\small mtli@cmu.edu}
+% % For a paper whose authors are all at the same institution,
+% % omit the following lines up until the closing ``}''.
+% % Additional authors and addresses can be added with ``\and'',
+% % just like the second author.
+% % To save space, use either the email address or home page, not both
+% \and
+% Alexander Shekhovtsov\\
+% Graz University of Technology\\
+% Institute for Computer Graphics and Vision\\
+% {\tt\small shekhovtsov@icg.tugraz.at}
+% }
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\input{content/abstract.tex}
+\setcounter{tocdepth}{2}
+\makeatletter
+\renewcommand*\l@author[2]{}
+\renewcommand*\l@title[2]{}
+\makeatletter
+
+%%%%%%%%% BODY TEXT
+\input{content/introduction.tex}
+\input{content/relatedwork.tex}
+\input{content/preliminaries.tex}
+\input{content/mainresult.tex}
+\input{content/planarresult.tex}
+% \input{content/results.tex}
+\input{content/specialcases.tex}
+\input{content/discussion.tex}
+\input{content/conclusion.tex}
+
+\section*{Acknowledgements}
+A. Shekhovtsov was supported by the European Research Council under the Horizon 2020 program, ERC starting grant agreement 640156.
+
+{\small
+%\bibliographystyle{ieee}
+%\bibliographystyle{splncs}
+%\bibliographystyle{apalike}
+\bibliographystyle{splncsnat}
+\bibliography{bib/strings,bib/egbib,bib/all}
+}
+
+\newpage
+\appendix
+% \input{content/additionaldef.tex}
+\input{content/formalproof.tex}
+
+% \input{content/ideas.tex}
+
+% \newpage
+% \let\authcount\relax
+% \tableofcontents
+
+\end{document}

@@ -1,0 +1,35 @@
+> Planar 2-label problems are APX-hard,
+as planar vertex cover is in APX:
+http://dl.acm.org/citation.cfm?id=802205
+
+> Caption for figure 1. This scale defines a partial order on the hardness. The relationships of the complexity classes is given in eq ().
+
+> In the proof, '3-label problem' should be replaced with '3rd order 2-label problem'.
+
+> Expanding motivation and practical implication in the introduction
+
+> Typo fix, approximiable/inapproximiable -> approximable/inapproximable.
+
+> Better explanation on the sign problem (as in practice the sign can be negative). Note we cannot constrain all the potentials to be non-negative as negative potentials are used in the proof.
+
+> Add more text of the usefulness of our result
+
+Comments from the first reviewer:
+"
+My complaints are mostly minor -- there are a few ways the paper could be improved to be more helpful to future researchers.
+
+Figure 1 could use some work -- if I were to guess, this is likely to be the most frequently excerpted part of this paper, as it puts the current state of knowledge on these problems in one picture.
+
+In particular, having the complexity classes as being points on the vertical line is somewhat confusing to me, as really they are subintervals or nested subsets, etc. Some different notation for classes vs. problems would be helpful. It might also make it more compact to have a set of nested ovals or similar? 
+
+Also, I would encourage adding a few more of the most used problem classes with known complexity, in particular tree-structured graphs.
+
+Line 33: You mention the pairwise case -- it may be worth pointing out that your results also cover the higher-order case as well, since as part of your proof of Theorem 3.1, you reduce w-3sat-triv to the higher order case first, and then from there to QPBO.
+
+Definition 2.8: This is definitely the least intuitive definition of the paper -- I understand you're following previous notation, but since your proofs don't actually use the rational "r", maybe consider dropping it? Also, just giving some intuition that pi maps from instance1 to instance2, and sigma maps back from feasible solution2 to feasible solution1 would be helpful.
+
+Proof of 3.1: Line 314, you say "3-label energy minimization" but I'm pretty sure you mean "2-label but higher order with cliques of size 3" (which is what the proof in the appendix does). 
+Additionally, I don't think steps 4-6 are a good use of space in your proof sketch: they are basically just the standard recipe for proofs of AP reduction, and you've already said what they need to be in the preceding section. Instead, a simple line of "this construction gives an AP-reduction from w3sat-triv to QPBO, and therefore QPBO is exp-APX-complete" would suffice. This gives more space for including some details from the construction, such as the definition of the polynomial used (which is straightforward, and would help give more intuition to readers).
+
+Similarly for 4.1, I would omit steps 2-4 and replace with a single line.
+"

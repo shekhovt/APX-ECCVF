@@ -1,0 +1,136 @@
+\section{Our Results}\label{sec:results}
+
+%This section presents our contribution to the study of complexity for energy minimization problems.
+\subsection{Definitions}
+The formal statement of the announced contribution requires the following notions: what is understood as a NP optimization problem in general and QPBO problem in particular and how the complexity classes are defined with the help of an approximation preserving reduction. The most important parts of this structure are as follows.
+
+%\par Unfortunately, there are slightly different versions of what to be considered as optimization problem \cite{orponen1987approximation, ausiello1999complexity}. We found \cite{ausiello1999complexity} to be the most consistent reference. % and we specialize these definitions here to the case of minimization problems for clarity.
+Unfortunately, different authors adopt different definitions of NP optimization problems and approximability, which results in a complexity claims that may sound contradictory, see~\autoref{fig-differences}. Roughly, NPO class by~\citet{Orponen90onapproximation} matches exp-APX class by~\citet{approx99}.
+\begin{table}[tb]
+\centering
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{|c|ccc|}
+\hline
+Source & Objective & Feasibility & Approximation Measure \\
+\hline
+\cite{Orponen90onapproximation} & non-negative & P &  cost-respecting\\
+\cite{approx99} & positive & NP &  approx. ratio\\
+\hline
+\end{tabular}
+\caption{Some differences in definitions\label{fig-differences} of the class of NP optimization problems in the literature.}
+\end{table}
+%\par
+Since one may arrive at a different claims, depending on these definitions, it is essential to state them precisely here. We follow~\citet{approx99} as the most consistent reference.
+%
+\begin{definition}[\cite{ausiello1999complexity}, Def. 1.16]A {\em minimization problem} $\P$ is characterized by a triplet $(\I,\S,m)$ where
+\begin{enumerate}
+\item $\I$ is the set of instances of $\P$;
+\item $\S$ is a function that associates to any input instance $x\in\I$ the set of {\em feasible solutions} of $x$;
+\item $m$ is the {\em measure} (or {\em cost} in context of minimization) function, defined for pairs $(x,y)$ such that $x\in\I$ and $y\in\S(x)$. For every such pair $(x,y)$, $m(x,y)$ provides a {\bf positive integer}\footnote{In practice, the measure is usually defined in $\mathcal{Q}$. It is however possible to transform any such problem into an equivalent one satisfying our definition} which is the value of the feasible solution $y$. 
+\end{enumerate}
+\end{definition}
+Notice, the important part of this definition, besides notation convention, is the assumption that the cost is positive, in particular it cannot be zero.
+Analogous to NP and P for decision problems, we have NPO and PO for optimization problems.
+%
+\begin{definition}[\cite{ausiello1999complexity}, Def 1.17] A minimization problem $\P = (\I,\S,m)$ belongs to the class of NP minimization (NPO) problems if the following holds:
+\begin{enumerate}
+\item the set of instances $I$ is recognizable in polynomial time.
+\item there exists a polynomial $q$ such that given an instance $x\in\I$, for any $y\in \S(x)$, $|y| < q(x)$ and, besides, for any $y$ such that $|y| < q(x)$, it is decidable in polynomial time whether $y\in\S(x)$.
+\item the measure function $m$ is computable in polynomial time.
+\end{enumerate}
+\end{definition}
+
+%
+\begin{definition}[\cite{ausiello1999complexity}, Def. 3.6]Given a minimization problem $\P$, for any instance $x$ of $\P$ and for any feasible solution $y\in\S(x)$, the {\em performance ratio} of $y$ with respect to $x$ is defined as
+\begin{align}
+R(x,y) = \frac{m(x,y)}{m^*(x)},
+\end{align}
+where $m^*(x)$ is the cost of the optimal solution.
+\end{definition}
+Now, since $m^*(x)$ is a positive integer, the performance ratio is well-defined, it is a rational number in $[1,\infty)$.
+Notice, already from this definition follows that if finding a feasible solution, \eg $y\in\S(x)$, is an NP-hard decision problem, then there exist no {\em polynomial-time} approximation algorithm for $\P$. And this is irrespective of the kind of performance evaluation that one could possibly mean. The energy minimization~\eqref{eq:1} is easier than that - finding a feasible solution does not present a problem.
+\begin{definition}[\cite{ausiello1999complexity}, Def. 8.1]Given an optimization problem $\P$ in NPO, an approximation algorithm $\A$ for $\P$, and a function $r\colon \Natural \to (1,\infty)$, we say that $\A$ is an {\em $r(n)$-approximate} algorithm for $\P$ if, for any instance $x$ of $\P$ such that $\S(x) \neq \emptyset$, the performance ratio of the feasible solution $\A(x)$ with respect to $x$ verifies the following inequality:
+\begin{align}
+R(x,\A(x)) \leq r(|x|).
+\end{align}
+\end{definition}
+\begin{definition}[\cite{ausiello1999complexity}, Def. 8.2]\label{def:F-APX} Given a class of functions $F$, $F$-APX is the class of all NPO problems $\P$ such that, for some function $r\in F$, there exists a polynomial-time $r(n)$-approximate algorithm for $\P$.
+\end{definition}
+
+For $F$ being the class of constant functions, we get the complexity class APX. Together with logarithmic, polynomials and exponent functions used in~\cref{def:F-APX}, the following classification ruler is established:
+\begin{align}\notag                                                                                                                                                          
+\mbox{PO $\subseteq$ APX $\subseteq$ log-APX $\subseteq$ poly-APX $\subseteq$ exp-APX $\subseteq$ NPO}.
+\end{align}
+
+
+\subsection{Results}
+%The following formally introduces what is understood as QPBO problem:
+As we seen above an optimization problem is specified by a set of its instances, set of its solutions and the objective. We have
+\begin{problem}{\bf QPBO}
+\begin{itemize}
+\item[\sc instance:] A pseudo-Boolean function $f \colon \Bool^\V \to \Natural \colon$
+\begin{align}
+f(x) = \sum_{v\in\V} f_u(x_u) + \sum_{u,v\in\V} f_{uv}(x_u,x_v),
+\end{align}
+given by the collection of unary terms $f_u$ and pairwise terms $f_{uv}$.
+\item[\sc solution:] Assignment of variables $x \in \Bool^\V$.
+\item[\sc measure:] $f(x) > 0$.
+\end{itemize}
+\end{problem}
+
+\begin{restatable}{theorem}{Tmain}\label{th:main}
+%\begin{theorem} \label{th:main}
+QPBO is exp-APX-complete.
+%\end{theorem}
+\end{restatable}
+\par
+%\vskip\0.5\baselineskip
+In the proof we construct a reduction from the weighted 3-satisfiability problem (W3SAT) using reduction by Ishikawa~\cite{ishikawa2011transformation} and show that the reduction preserves approximation ratio. We then use the known result that W3SAT can be used to solve any optimization problem encoded by a Turing machine and thus is complete in the class exp-APX.
+Next, we show that restricting to planar 3-label energy minimization is also as hard:
+%In addition, we construct a reduction that converts any 3-label energy minimization problems into a planar one. 
+%This reduction is an approximation preserving (AP) one (will be defined and explained in \cref{sec:appendix}), thus showing that planar 3-label energy minimization is as hard as any arbitrary 3-label energy minimization. Therefore, we have the following theorem:
+\begin{restatable}{theorem}{Tplanar} \label{th:planar}
+Planar 3-label energy minimization is exp-APX-complete.
+\end{restatable}
+This result uses reduction gadgets inspired by a similar construction for reduction of LP-relaxations~\cite{prusa2015hard,Prusa-Werner-15-Universality}. Similar to these works we show how some edges may be uncrossed using auxiliary variables. Differently from them, the gadgets reduce integer solutions and not relaxed once (indeed their gadgets are infeasible for the discrete problem).
+\par
+The implications of the above theorems are further explained by the following corollaries. % (assuming P $\neq$ NP)
+
+%\begin{corollary}
+%QPBO is NP-hard.
+%\end{corollary}
+
+%\begin{corollary}
+\begin{restatable}{corollary}{CexpApprox}\label{C:exp-approx}
+There is no algorithm that can approximate QPBO  or planar 3-label energy minimization with an approximation ratio better than some exponential functions in the input size.
+\end{restatable}
+%\end{corollary}
+
+%\begin{corollary}
+This next corollary relates to the existing results for Bayesian networks.
+\begin{restatable}{corollary}{CprobApprox}\label{C:prob-approx}
+Probability ratio approximation is poly-APX-hard: it is NP-hard to approximate MAP in the value of probability~\eqref{p-approx-ratio} with any polynomial ratio $r(n)$.
+%\end{corollary}
+\end{restatable}
+
+Naturally, the above results hold for the general form in (\ref{eq:1}) with arbitrary label space $\mathcal{L}$, as it contains all instances of QPBO.
+There is one other corollary for the general problem:
+
+\begin{restatable}{corollary}{ClabelApprox}\label{C:label-approx}
+There is no algorithm that can approximate $k$-label energy minimization with an approximation ratio better or equal than some polynomials in $k$.
+\end{restatable}
+%\vskip0.5\baselineskip
+\par
+%In sum, these results amount to that any approximation algorithm of the general discrete energy minimization problem can perform arbitrarily bad and it might be pointless to try to prove the approximation bound of existing approximation algorithms in the general case. 
+\par
+These inapproximability results should be understood not as disappointing facts (as they were in fact expected) but as a clarification of grounds and guidance for model selection and algorithms design. For example, since QPBO is harder than MAXCUT it might be preferable to use MAXCUT as a model in a specific application or as a subproblem solver in a general optimization algorithm. While any energy minimization can be reduced to a Potts model (see next section), there exist no reduction that preserves approximation ratio because Potts model is in APX, an easier complexity class. Therefore proposing an algorithm employing such a reduction and quoting the 2-approximability of Potts model would be an immediate mistake.
+%
+%On the other hand, it does not make sense to reduce TSP to QPBO, as   
+%
+%These results are indeed disappointing, but as we have discussed, many of its subclass problems are relatively tractable. 
+%We should not count on an oracle that solves the energy minimization problem. Instead, we should put efforts into selecting the proper formulation, trading off expressiveness for tractability.
+%
+%Implications of \cref{th:main} apply here as well. 
+%The reduction itself might be useful if 3-label planar energy minimization is tractable. Yet, we present the reduction here as an inspiration for algorithmic design and proofs.
+
+

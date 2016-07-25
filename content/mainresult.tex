@@ -1,0 +1,67 @@
+\section{Inapproximability for the General Case} \label{sec:gencase}
+
+% Start section with an overview:
+% - explain the goal.  What is known, what you will show.
+% - explain the process
+%   - qpbo is a special case.
+%   - prove that and then extend to general case.
+In this section, we show that QPBO and general energy minimization are inapproximable by proving they are exp-APX-complete. As previously mentioned, it is already known that these problems are NP-hard \cite{BorosHammer02}, but it was previously unknown whether useful approximation guarantees were possible in the general case.  %We start our proof with the 2-label case QPBO, then we prove the more general case.
+The formal statement of QPBO as an optimization problem is as follows:
+\begin{problem}{\bf QPBO}
+\begin{itemize}
+\item[\sc instance:] A pseudo-Boolean function $f \colon \Bool^\V \to \Natural \colon$
+\begin{align}
+f(x) = \sum_{v\in\V} f_u(x_u) + \sum_{u,v\in\V} f_{uv}(x_u,x_v),
+\end{align}
+given by the collection of unary terms $f_u$ and pairwise terms $f_{uv}$.
+\item[\sc solution:] Assignment of variables $x \in \Bool^\V$.
+\item[\sc measure:] $\min f(x) > 0$.
+\end{itemize}
+\end{problem}
+
+\begin{restatable}{theorem}{Tmain}\label{th:main}
+%\begin{theorem} \label{th:main}
+QPBO is exp-APX-complete.
+%\end{theorem}
+\end{restatable}
+%\noindent
+\begin{proofsketch} (Full proof in \cref{sec:formalproof}).
+\begin{enumerate}
+\item We observe that W3SAT-triv is known to be exp-APX-complete \cite{ausiello1999complexity}. W3SAT-triv is a 3-SAT problem with weights on the variables and an artificial, trivial solution.
+\item Each 3-clause in the conjunctive normal form can be represented as a polynomial consisting of three binary variables. Together with representing the weights with the unary terms, we arrive at a 3-label energy minimization problem.
+\item We use the method of~\cite{ishikawa2011transformation} to transform the 3-label problem into a 2-label one, with polynomially many additional variables, which is an instance of QPBO.
+\item The transformation defines an injective forward mapping $\pi$ and then we define a surjective inverse mapping $\sigma$ to set up the two-way correspondence between W3SAT-triv and the transformed QPBO.
+\item We prove that such mappings build an AP-reduction from W3SAT-triv to QPBO, \ie W3SAT-triv $\leqAP$ QPBO. This proves that QPBO is exp-APX-hard.
+\item We observe that all energy minimization problems are in exp-APX and thereby concluding that QPBO is exp-APX-complete.
+\end{enumerate}
+\end{proofsketch}
+% ::: If there is space, it would be good to flesh this proof sketch out a bit.  In particular, there i no intuition of what pi and sigma are in this brief sketch
+% ** sigma cannot be explained before formally showing W3SAT-triv
+
+This inapproximability result can be generalized to more than two labels.
+\begin{restatable}{corollary}{Cgen}\label{C:gen}
+$k$-label energy minimization is exp-APX-complete for $k \geq 2$.
+\end{restatable}
+%
+%\noindent
+%\textbf{Proof sketch} 
+\begin{proofsketch}
+(Full proof in \cref{sec:formalproof}). This theorem is proved by showing QPBO $ \leqAP$ $k$-label energy minimization for $k \geq 2$.
+\end{proofsketch}
+%We show in \cref{C:prob-approx} the inapproximability in energy (log probability) transfer to probability in Equation~\cref{p-approx-ratio} as well.
+
+ Our result also implies inapproximablity of MAP in the measure of probability (as studied for directed networks by~\citet{Kwisthout-13}). For undirected models the probability is given by the associated Gibbs distribution: $p(x) = \exp(-E(x))$.
+ \begin{restatable}{corollary}{CprobApprox}\label{C:prob-approx}
+ It is NP-hard to find a solution $x^*$ to MAP such that $p(x^*)/p(x) < \exp(r(n))$ for any given polynomial $r$.
+ %\end{corollary}
+ \end{restatable}
+ \begin{proofsketch}
+ (Full proof in \cref{sec:formalproof}). Note that a ratio $r(n)$ in the energy leads to $\Theta(\exp(r(n)))$ for the ratio in probability.
+ \end{proofsketch}
+
+Taken together, this theorem and its corollaries form a very strong inapproximability result for general energy minimization. They imply not only NP-hardness, but also that there is no algorithm that can approximate general energy minimization with two or more labels with an approximation ratio better than {\red some exponential function in the input size}. In other words, any approximation algorithm of the general energy minimization problem can perform arbitrarily badly, and it would be pointless to try to prove a bound on the approximation ratio for existing approximation algorithms for the general case.  While this conclusion is disappointing, these results serve as a clarification of grounds and guidance for model selection and algorithm design. Instead of counting on an oracle that solves the energy minimization problem, researchers should put efforts into selecting the proper formulation, trading off expressiveness for tractability. % For example, since QPBO is harder than MAXCUT it might be preferable to use MAXCUT as a model in a specific application or as a sub-problem solver in a general optimization algorithm.
+
+% Note all the above discussion (collorary 
+%In sum, these results amount to that any approximation algorithm of the general energy minimization problem can perform arbitrarily bad and it might be pointless to try to prove the approximation bound of existing approximation algorithms in the general case. 
+% \par
+% These inapproximability results should be understood not as disappointing facts (as they were in fact expected) but as a clarification of grounds and guidance for model selection and algorithms design. For example, since QPBO is harder than MAXCUT it might be preferable to use MAXCUT as a model in a specific application or as a subproblem solver in a general optimization algorithm. While any energy minimization can be reduced to a Potts model (see next section), there exist no reduction that preserves approximation ratio because Potts model is in APX, an easier complexity class. Therefore proposing an algorithm employing such a reduction and quoting the 2-approximability of Potts model would be an immediate mistake.

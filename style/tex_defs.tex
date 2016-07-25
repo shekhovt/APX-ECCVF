@@ -1,0 +1,336 @@
+%\usepackage{mathrsfs}
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareMathAlphabet{\mathantt}{OT1}{antt}{li}{it}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+\DeclareMathOperator{\Path}{path}
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\opt}{opt}
+\newcommand{\Argmax}{\mathop{\rm Argmax}}
+\newcommand{\argmax}{\mathop{\rm argmax}}
+\newcommand{\Argmin}{\mathop{\rm Argmin}}
+\newcommand{\argmin}{\mathop{\rm argmin}}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Row}{Row}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Col}{Col}
+\DeclareMathOperator{\ort}{^{\bot}}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\ri}{relint}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\coni}{coni}
+\DeclareMathOperator{\Null}{null}
+\DeclareMathOperator{\select}{select}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\newcommand{\<}{\langle}
+\renewcommand{\>}{\rangle}
+\newcommand{\Mid}{\:\big|\,}
+\renewcommand{\mid}{\:|\,}
+\newcommand{\bb}{\boldsymbol}
+
+\newcommand{\Real}{\mathbb{R}}
+%\newcommand{\WI}{\ensuremath{{\rm WI}(\Lambda,f)}\xspace}
+%\newcommand{\SI}{\ensuremath{{\rm SI}(\Lambda,f)}\xspace}
+%\newcommand{\WIg}{\ensuremath{{\rm WI}(\Lambda,g)}\xspace}
+%\newcommand{\SIg}{\ensuremath{{\rm SI}(\Lambda,g)}\xspace}
+%\newcommand{\WIx}[1]{\ensuremath{{\mathbb{W}}(\Lambda,#1)}\xspace}
+%\newcommand{\SIx}[1]{\ensuremath{{\mathbb{S}}(\Lambda,#1)}\xspace}
+%\newcommand{\WI}{\ensuremath{{\mathbb{W}}(\Lambda,f)}\xspace}
+%\newcommand{\SI}{\ensuremath{{\mathbb{S}}(\Lambda,f)}\xspace}
+%\newcommand{\WIg}{\ensuremath{{\mathbb{W}}(\Lambda,g)}\xspace}
+%\newcommand{\SIg}{\ensuremath{{\mathbb{S}}(\Lambda,g)}\xspace}
+
+\newcommand{\WIx}[1]{\ensuremath{\mathbb{W}_{#1}}\xspace}
+\newcommand{\SIx}[1]{\ensuremath{\mathbb{S}_{#1}}\xspace}
+\newcommand{\WI}{\WIx{f}}
+\newcommand{\SI}{\SIx{f}}
+\newcommand{\WIg}{\WIx{g}}
+\newcommand{\SIg}{\SIx{f}}
+
+
+\newcommand{\Natural}{\mathbb{N}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\Rationals}{\mathbb{Q}}
+
+\def\bbbone{{\mathchoice {\rm 1\mskip-4mu l} {\rm 1\mskip-4mu l}{\rm 1\mskip-4.5mu l} {\rm 1\mskip-5mu l}}}
+\newcommand{\Ind}{\bbbone}
+\newcommand{\tab}{{\hphantom{bla}}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\Bool}{\mathbb{B}}
+\newcommand{\Boolean}{\mathbb{B}}
+\newcommand{\bigU}{\mathbb{U}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\D}{\mathcal{D}}
+\def\O{\mathcal{O}}
+\newcommand{\F}{\mathcal{F}}
+\def\G{\mathcal{G}}
+\def\H{\mathcal{H}}
+\newcommand{\mF}{\mathcal{F}}
+\newcommand{\mP}{\mathcal{P}}
+\newcommand{\mC}{\mathcal{C}}
+\def\C{\mathcal{C}}
+\newcommand{\Literals}{\mathbb{\nLabels}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\I}{\mathcal{I}}
+\def\U{\mathcal{U}}
+\newcommand{\W}{\mathcal{W}}
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\E}{\mathcal{E}}
+\DeclareMathOperator{\sym}{sym}
+\newcommand{\EE}{\tilde{\E}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calI}{\mathcal{I}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\M}{\mathcal{M}}
+%\newcommand{\LL}{\bb{\mathcal{L}}}
+\newcommand{\LL}{\mathcal{X}}
+\newcommand{\Labels}{\X}
+\newcommand{\nLabels}{L+1}
+%\newcommand{\vect}{\overrightarrow}
+%\newcommand{\lvect}{\overleftarrow}
+\def\T{^{\mathsf T}}
+\newcommand{\st}{\mbox{s.t.\ }}
+
+\newcommand{\bulletpar}{\noindent $\bullet\tab$}
+\newcounter{myRomanCounter}
+\newcommand*{\RomanItem}[1]{\setcounter{myRomanCounter}{#1}\par\noindent\Roman{myRomanCounter}.\ }
+\newcommand*{\RomanNumber}[1]{\setcounter{myRomanCounter}{#1}\Roman{myRomanCounter}}
+
+\providecommand{\Zeta}{\mathcal{Z}}
+
+%\def\etalb{{\itshape \bfseries et al.}}
+%\def\etalb{{\itshape et al.}}
+\def\etalb{ et al.}
+\newcommand{\f}{{E_f}}
+\newcommand{\g}{{E_g}}
+\newcommand{\h}{{E_h}}
+\newcommand{\x}{{x}}
+\newcommand{\y}{{y}}
+\newcommand{\z}{{z}} 
+\newcommand{\w}{{w}}
+
+%\newcommand{\sE}{{\scriptsize \textrm{E}}}
+%\newcommand{\sG}{{\scriptsize \textrm{G}}}
+%\newcommand{\sH}{{\scriptsize \textrm{H}}}
+
+%\newcommand{\c}{{\scriptstyle \textrm{C}}}
+%\newcommand{\sD}{{\scriptstyle \textrm{D}}}
+%\newcommand{\sH}{{\scriptstyle \textrm{H}}}
+
+
+%\newcommand{\c}{\textsc{c}}
+%\newcommand{\c}{\textsc{c}}
+\def\c{\textsc{c}}
+\def\d{\textsc{d}}
+\def\h{\textsc{h}}
+\def\a{\textsc{a}}
+\def\b{\textsc{b}}
+\def\j{\textsc{j}}
+%\newcommand{\sD}{\textsc{d}}
+%\newcommand{\sH}{\textsc{h}}
+
+%\newcommand{\c}{\textsc{j}}
+%\newcommand{\sD}{\textsc{k}}
+%\newcommand{\sH}{\textsc{h}}
+
+\newcommand{\Esubset}{\stackrel{.}{\subsetneq}}
+\newcommand{\Esubseteq}{\stackrel{.}{\subset}}
+\newcommand{\Esupset}{\stackrel{.}{\supsetneq}}
+
+\newcommand{\Gsubset}{\stackrel{..}{\subsetneq}}
+\newcommand{\Gsupset}{\stackrel{..}{\supsetneq}}
+
+
+%\newcommand{\sE}{e}
+%\newcommand{\sG}{c}
+%\newcommand{\sH}{d}
+
+\newcommand{\energy}[1]{{E_{#1}}}
+\newcommand{\bc}{{\bf c}}
+\newcommand{\bzero}{0}
+\newcommand{\bone}{1}
+\newcommand{\K}{\mathcal{K}}
+
+\newcommand{\nx}{\overline{x}}
+\newcommand{\define}{:=}
+\newcommand{\PD}{\mathbb{S}_{++}}
+\newcommand{\PSD}{\mathbb{S}_{+}}
+
+\newcommand*{\LB}{\ensuremath{\mathit LB}\xspace}
+\newcommand*{\LBtwo}{\ensuremath{\mathit LB2}\xspace}
+\newcommand*{\LBtwodual}{\ensuremath{\mathit LB2\mbox{-}dual}\xspace}
+\newcommand*{\LP}{\ensuremath{\mathit LP\mbox{-}1}\xspace}
+\newcommand*{\LPtwo}{\ensuremath{\mathit LP\mbox{-}2}\xspace}
+
+
+\newtheorem{Note}{note}
+
+\newtheorem{method}{Method}
+
+\newcommand{\smallL}{{\scriptscriptstyle{\left(\right.}}}
+\newcommand{\smallR}{{\scriptscriptstyle{\left.\right)}}}
+
+\renewcommand{\iff}{{\textrm{iff} }}
+
+\newcommand{\VH}{V{\'a}clav Hlav{\'a}{\v c}}
+\newcommand{\AS}{Alexander Shekhovtsov}
+\newcommand{\TW}{Tom{\'a}{\v s} Werner\xspace}
+\newcommand{\IRTC}{International Research and Training Center\\ for Informational Technologies and Systems, Kiev}
+\newcommand{\CMP}{Czech Technical University in Prague,\\
+    Faculty of Electrical Engineering, Department of Cybernetics\\
+    Center for Machine Perception}
+\newcommand{\gray}{\color[rgb]{0.5,0.5,0.5}}
+\newcommand{\red}{\color[rgb]{1,0,0}}
+\newcommand{\green}{\color[rgb]{0,1,0}}
+\newcommand{\blue}{\color[rgb]{0,0,1}}
+
+\newlength{\figwidth}
+\newlength{\figwidtha}
+\newlength{\figwidthb}
+
+%\newcommand*{\mypar}[1]{\paragraph{#1}}
+\newcommand*{\mypar}[1]{\par{\normalsize\bf #1}\ }
+\renewcommand*{\paragraph}[1]{\par\noindent{\normalsize\bf #1}\,\xspace}
+
+\renewcommand*{\marginpar}[1]{\marginnote{#1}}
+
+
+\def\mathrlap{\mathpalette\mathrlapinternal} 
+\def\mathllap{\mathpalette\mathllapinternal}
+\def\mathllapinternal#1#2{\llap{$\mathsurround=0pt#1{#2}$}}
+\def\mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
+
+\def\ij{i,j}
+\def\ji{j,i}
+\DeclareRobustCommand{\ind}[1]{\vphantom{f}_{#1}}
+\DeclareRobustCommand{\ind}[1]{(#1)}
+
+\def\leftbb{\mathrlap{[}\hskip1.3pt[}
+\def\rightbb{]\hskip1.36pt\mathllap{]}}
+
+\def\bbleft{\leftbb}
+\def\bbright{\rightbb}
+\def\barvee{\veebar}
+\def\Vee{\bigvee}
+\def\Wedge{\bigwedge}
+\def\phi{\delta}
+\def\epsilon{\varepsilon}
+\def\eps{\varepsilon}
+\newcommand{\IF}{\mbox{ \rm if }}
+\newcommand{\OR}{\mbox{ \rm or }}
+\newcommand{\AND}{\mbox{ \rm and }}
+\newcommand{\OTHERWISE}{\mbox{ \rm otherwise}}
+\newcommand{\Algorithm}[1]{{Algorithm\,\ref{#1}}}
+\newcommand{\Algorithms}[1]{{Algorithms\,\ref{#1}}}
+\newcommand{\Section}[1]{\cref{#1}}
+%\newcommand{\Section}[1]{\S\ref{#1}}
+\makeatletter
+\let\parSym\S
+\def\S{\mathcal{S}}
+\makeatother
+\newcommand{\Figure}[1]{{Figure\,\ref{#1}}}
+\newcommand{\Theorem}[1]{{Theorem\,\ref{#1}}}
+\newcommand{\Lemma}[1]{{Lemma\,\ref{#1}}}
+\newcommand{\Chapter}[1]{{Chapter\,\ref{#1}}}
+\newcommand{\Chapters}[1]{{Chapters\,\ref{#1}}}
+\newcommand{\Statement}[1]{{Statement\,\ref{#1}}}
+\newcommand{\Corollary}[1]{{Corollary\,\ref{#1}}}
+\newcommand{\Definition}[1]{{Definition\,\ref{#1}}}
+
+\setlength{\arraycolsep}{0.2em}
+
+\newcommand{\halfskip}{\vskip0.5\baselineskip}
+\def\defeq{\buildrel \text{d{}ef}\over =}	
+\newcommand{\lsub}[1]{\limits_{\begin{subarray}{l}\setlength{\arraycolsep}{0.2em}#1\end{subarray}}}
+\newcommand{\csub}[1]{\limits_{\begin{subarray}{c}\setlength{\arraycolsep}{0.2em}#1\end{subarray}}}
+\newcommand{\clim}[1]{\limits_{\begin{subarray}{c}\setlength{\arraycolsep}{0.2em}#1\end{subarray}}}
+
+\newcommand{\mincut}{{\scshape mincut}\xspace}
+\newcommand{\maxflow}{{\scshape maxflow}\xspace}
+%\newcommand{\mincludegraphics}[2][]{\includegraphics[#1]{#2}}
+\makeatletter
+\newenvironment{rsmallmatrix}{\null\,\vcenter\bgroup
+  \Let@\restore@math@cr\default@tag
+  \baselineskip6\ex@ \lineskip1.5\ex@ \lineskiplimit\lineskip
+  \ialign\bgroup\hfil$\m@th\scriptstyle##$&&\thickspace\hfil
+  $\m@th\scriptstyle##$\crcr
+}{
+  \crcr\egroup\egroup\,
+}
+\makeatother
+%
+\def\maxwi{\eqref{best L-improving}\xspace}
+\def\maxsi{{(\mbox{\sc max-si})}\xspace}
+\def\cf{\emph{cf}\onedot} \def\Cf{\emph{Cf}\onedot}
+
+%\def\revisit{\ensuremath{\red \triangle}\xspace}
+\newcommand{\revisit}[1][]{%
+\ifthenelse{\equal{#1}{}}{% no argument
+\ensuremath{\red \triangle}\xspace}{%
+{\ensuremath{\red \rhd}\xspace}%
+{\gray #1}%
+{\ensuremath{\red \lhd}\xspace}%
+}%
+}
+
+\def\anchor [#1]#2{%
+\phantomsection{}#1\label{#2}%
+\def\arga{#2}%
+\global\expandafter\def\csname#2\endcsname{%
+\hyperref[#2]{#1}\xspace%
+}%
+}%
+
+\def\codefunction [#1]#2{%
+\phantomsection{}\label{#2}{\ttfamily #1\xspace}%
+\def\arga{#2}%
+\global\expandafter\def\csname#2\endcsname{%
+\hyperref[#2]{\ttfamily #1}\xspace%
+}%
+}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+\newcommand{\mm}{\mathit{m}}
+
+\SetKwFor{forever}{while true}{}{end while}
+\def\peq{\mathrel{{+}{=}}}
+\def\meq{\mathrel{{-}{=}}}
+
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+\newcommand{\norm}[1]{\lVert#1\rVert_1}
+
+\newcommand{\footlabel}[2]{%
+    \addtocounter{footnote}{1}%
+    \footnotetext[\thefootnote]{%
+        \addtocounter{footnote}{-1}%
+        \refstepcounter{footnote}\label{#1}%
+        #2%
+    }%
+    $^{\ref{#1}}$%
+}
+
+\newcommand{\footref}[1]{%
+    $^{\ref{#1}}$%
+}
+
+\def\epsilon{\varepsilon}
+
+\newcommand{\leqL}{\mathbin{{\leq}_{\text{\tiny{L}}}}}
+\newcommand{\leqAP}{\mathbin{{\leq}_{\text{\tiny AP}}}}

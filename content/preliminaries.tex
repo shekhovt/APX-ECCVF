@@ -1,0 +1,92 @@
+\section{Definitions and Notation} \label{sec:prelim}
+
+There are at least two different sets of definitions of what is considered an NP optimization problem~\cite{orponen1987approximation, ausiello1999complexity}. Here, we follow the notation of Ausiello et al~\cite{ausiello1999complexity} and restate the definitions needed for us to state and prove our theorems in Sections~\ref{sec:gencase} and \ref{sec:plcase} with our explanation of their relevance to our proofs.
+
+\begin{definition}[Optimization Problem, \cite{ausiello1999complexity} Def. 1.16]An {\em optimization problem} $\P$ is characterized by a quadruple $(\I,\S,m,\text{goal})$ where
+\begin{enumerate}
+\item $\I$ is the set of instances of $\P$;
+\item $\S$ is a function that associates to any input instance $x\in\I$ the set of {\em feasible solutions} of $x$;
+\item and $m$ is the {\em measure} function, defined for pairs $(x,y)$ such that $x\in\I$ and $y\in\S(x)$. For every such pair $(x,y)$, $m(x,y)$ provides a  positive integer.
+\item goal $\in$ \{MIN, MAX\}.
+
+% \footnote{In practice, usually $m \in \mathcal{Q}$ the measure is usually defined in $\mathcal{Q}$ (rational numbers). However, it is possible to transform any such problem into an equivalent one where m is a positive integer. (cite)}
+%satisfying our definition} which is the value of the feasible solution $y$. 
+
+\end{enumerate}
+\end{definition}
+\noindent
+Notice the assumption that the cost is positive, and, in particular, it cannot be zero.
+
+%Analogous to NP and P for decision problems, we have NPO and PO for optimization problems:
+
+\begin{definition}[Class NPO, \cite{ausiello1999complexity} Def 1.17] An optimization problem $\P = (\I,\S,m, \text{goal}$ $\in$ $\{\min , \max\} )$ belongs to the class of NP optimization (NPO) problems if the following hold:
+\begin{enumerate}
+\item The set of instances $\I$ is recognizable in polynomial time.
+\item There exists a polynomial $q$ such that given an instance $x\in\I$, for any $y\in \S(x)$, $|y| < q(x)$ and, besides, for any $y$ such that $|y| < q(x)$, it is decidable in polynomial time whether $y\in\S(x)$.
+\item The measure function $m$ is computable in polynomial time.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Class PO, \cite{ausiello1999complexity} Def 1.18] An optimization problem $\P$ belongs to the class of PO if it is in NPO and there exists a polynomial-time algorithm that, for any instance $x\in\I$, returns an optimal solution $y\in\S^*(x)$, together with its value $m^*(x)$.
+\end{definition}
+
+%For intractable problems, it may be acceptable to seek an approximate solution that is sufficiently close to optimal.
+
+\begin{definition}[Approximation Algorithm, \cite{ausiello1999complexity} Def. 3.1]Given an optimization problem $\P = (\I,\S,m,\text{goal})$ an algorithm $\A$ is an {\em approximation algorithm} for $\P$ if, for any given instance $x\in\I$, it returns an {\em approximate solution}, that is a feasible solution $\A(x) \in \S(x)$.
+\end{definition}
+
+%
+\begin{definition}[Performance Ratio, \cite{ausiello1999complexity}, Def. 3.6] \label{def:ratio} Given an optimization problem $\P$, for any instance $x$ of $\P$ and for any feasible solution $y\in\S(x)$, the {\em performance ratio}, {\em approximation ratio} or {\em approximation factor} of $y$ with respect to $x$ is defined as
+\begin{align}
+R(x,y) = \max\Big\{\frac{m(x,y)}{m^*(x)}, \frac{m^*(x)}{m(x,y)}\Big\},
+\end{align}
+where $m^*(x)$ is the measure of the optimal solution for the instance $x$.
+\end{definition}
+Since $m^*(x)$ is a positive integer, the performance ratio is well-defined. It is a rational number in $[1,\infty)$.
+Notice that from this definition, it follows that if finding a feasible solution, \eg $y\in\S(x)$, is an NP-hard decision problem, then there exists no polynomial-time approximation algorithm for $\P$, irrespective of the kind of performance evaluation that one could possibly mean. 
+
+\begin{definition}[$r(n)$-approximation, \cite{ausiello1999complexity}, Def. 8.1]Given an optimization problem $\P$ in NPO, an approximation algorithm $\A$ for $\P$, and a function $r\colon \Natural \to (1,\infty)$, we say that $\A$ is an {\em $r(n)$-approximate} algorithm for $\P$ if, for any instance $x$ of $\P$ such that $\S(x) \neq \emptyset$, the performance ratio of the feasible solution $\A(x)$ with respect to $x$ verifies the following inequality:
+\begin{align}
+R(x,\A(x)) \leq r(|x|).
+\end{align}
+\end{definition}
+
+\begin{definition}[$F$-APX, \cite{ausiello1999complexity}, Def. 8.2]\label{def:F-APX} Given a class of functions $F$, $F$-APX is the class of all NPO problems $\P$ such that, for some function $r\in F$, there exists a polynomial-time $r(n)$-approximate algorithm for $\P$.
+\end{definition}
+
+The class of constant functions for $F$ yields the complexity class APX. Together with logarithmic, polynomial, and exponential functions applied in~\cref{def:F-APX}, the following {\em complexity axis} is established:
+\begin{align}\notag                                           
+\mbox{PO $\subseteq$ APX $\subseteq$ log-APX $\subseteq$ poly-APX $\subseteq$ exp-APX $\subseteq$ NPO}.
+\end{align}
+
+\noindent
+
+Since the measure $m$ needs to be computable in polynomial time for NPO problems, the largest measure and thus the largest performance ratio is an exponential function. But exp-APX does not equal to NPO (assuming P $\neq$ NP) because NPO contains problems whose feasible solutions cannot be found in polynomial time.  For an energy minimization problem, any label assignment is a feasible solution, implying that all energy minimization problems are in exp-APX.
+
+% While any energy minimization can be reduced to a Potts model~\cite{prusa2015hard},
+% % ::: not actually in the next section
+% there exists no reduction that preserves the approximation ratio because Potts model is in APX, an easier complexity class. Therefore proposing an algorithm employing such a reduction and quoting the 2-approximability of the Potts model would be an immediate mistake.
+
+The standard approach for proofs in complexity theory is to perform a reduction from a known NP-complete problem.  Unfortunately, the most common polynomial-time reductions ignore the quality of the solution in the approximated case. For example, it is shown that any energy minimization problem can be reduced to a factor 2 approximable Potts model \cite{prusa2015hard}, however the reduction is not approximation preserving and is unable to show the hardness of general energy minimization in terms of approximation. Therefore, it is necessary to use an approximation preserving (AP) reduction to classify NPO problems that are not in PO, for which only the approximation algorithms are tractable.  AP-preserving reductions preserve the approximation ratio in a linear fashion, and thus preserve the membership in these complexity classes.  Formally,
+
+\begin{definition}[AP-reduction, \cite{ausiello1999complexity} Def. 8.3]\label{def:AP-red}
+Let $\P_1$ and $\P_2$ be two problems in NPO. $\P_1$ is said to be AP-{\em reducible} to $\P_2$, in symbols $\P_1 \leqAP \P_2$, if two functions $\pi$ and $\sigma$ and a positive constant $\alpha$ exist such that:
+\begin{enumerate}
+\item For any instance $x\in \I_1$ and for any rational $r > 1$, $\pi(x, r) \in \I_2$.
+\item For any instance $x\in \I_1$ and for any rational $r > 1$, if $S_1(x) \neq \emptyset$ then $S_2(\pi(x,r)) \neq \emptyset$.
+\item For any instance $x\in \I_1$, for any rational $r > 1$ and for any $y \in S_2(\pi(x,r))$, $\sigma(x, y, r) \in S_1(x)$.
+\item $\pi$ and $\sigma$ are computable by algorithms whose running time is polynomial for any fixed rational $r$.
+\item For any instance $x\in \I_1$, for any rational $r > 1$, and for any $y \in S_2(\pi(x,r))$,
+\begin{align} \label{eq:AP-red}
+R_2(\pi(x,r),y) \leq r \quad \text{implies} \\
+R_1(x, \sigma(x, y, r)) \leq 1 + \alpha(r-1).
+\end{align}
+\end{enumerate}
+\end{definition}
+
+AP-reduction is the formal definition of the term `as hard as' used in this paper unless otherwise specified. It defines a partial order among optimization problems. With respect to this relationship, we can formally define the subclass containing the hardest problems in a complexity class:
+
+\begin{definition}[$\C$-hard and $\C$-complete,  \cite{ausiello1999complexity} Def. 8.5]\label{def:complete} Given a class $\C$ of NPO problems, a problem $\P$ is $\C$-hard if, for any $\P' \in \C$, $\P' \leqAP \P$. A $\C$-hard problem is $\C$-complete if it belongs to $\C$.
+\end{definition}
+
+Intuitively, a complexity class $\C$ specifies the upper bound on the hardness of the problems within, $\C$-hard specifies the lower bound, and $\C$-complete exactly specifies the hardness.

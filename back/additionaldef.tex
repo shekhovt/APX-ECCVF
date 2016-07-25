@@ -1,0 +1,41 @@
+\section{Additional Necessary Definitions} \label{sec:additonaldef}
+
+%\subsection{Optimization Problems}
+
+%\revisit[It might be better to move this sub-section to the appendix]
+
+\begin{definition}[Class PO, \cite{ausiello1999complexity} Def 1.18] An minimization problem $\P$ belongs to the class of PO if it is in NPO and there exists a polynomial-time computable algorithm that, for any instance $x\in\I$, returns an optimal solution $y\in\S^*(x)$, together with its value $m^*(x)$.
+\end{definition}
+
+\begin{definition}[Approximaton Algorithm, \cite{ausiello1999complexity} Def. 3.1]Given a minimization problem $\P = (\I,\S,m)$ an algorithm $\A$ is an {\em approximation algorithm} for $\P$ if, for any given instance $x\in\I$, it returns an {\em approximate solution}, that is a feasible solution $\A(x) \in \S(x)$.
+\end{definition}
+
+%\subsection{Performance Evaluation}
+
+%\revisit[It might be better to move this sub-section to the appendix]
+%Definition of AP-reduction
+\begin{definition}[AP-reduction, \cite{ausiello1999complexity} Def. 8.3]\label{def:AP-red}
+Let $\P_1=(\I_1,S_1,m_1)$ and $\P_2=(\I_2,S_2,m_2)$ be two problems in NPO. $\P_1$ is said to be AP-{\em reducible} to $\P_2$, in symbols $\P_1 \leqAP \P_2$, if two functions $\pi$ and $\sigma$ and a positive constant $\alpha$ exist such that:
+\begin{enumerate}
+\item For any instance $x\in \I_1$ and for any rational $r > 1$, $\pi(x, r) \in \I_2$.
+\item For any instance $x\in \I_1$ and for any rational $r > 1$, if $S_1(x) \neq \emptyset$ then $S_2(\pi(x,r)) \neq \emptyset$.
+\item For any instance $x\in \I_1$, for any rational $r > 1$ and for any $y \in S_2(\pi(x,r))$, $\sigma(x, y, r) \in S_1(x)$.
+\item $\pi$ and $\sigma$ are computable by algorithms whose running time is polynomial for any fixed rational r.
+\item For any instance $x\in \I_1$, for any rational $r > 1$, and for any $y \in S_2(\pi(x,r))$,
+\begin{align} \label{eq:AP-red}
+R_2(\pi(x,r),y) \leq r \quad \text{implies} \\
+R_1(x, \sigma(x, y, r)) \leq 1 + \alpha(r-1).
+\end{align}
+\end{enumerate}
+\end{definition}
+
+The acronym "AP" stands for approximation preserving. In contrast, the most common polynomial-time reductions for decision problems ignore the quality of the solution in the approximated case. Therefore AP-reduction is necessary to further classify NPO problems that are not in PO, for which only the approximation algorithms are tractable.
+
+%\subsection{Approximation Classes}
+
+%\revisit[It might be better to move this sub-section to the appendix]
+
+\begin{definition}[$\C$-hard, \cite{ausiello1999complexity} Def. 8.5]\label{def:complete} Given a class $\C$ of NPO problems, a problem $\P$ is $\C$-hard if, for any $\P' \in \C$, $\P' \leqAP \P$. A $\C$-hard problem is $\C$-complete if it belongs to $\C$.
+\end{definition}
+\revisit[A partial order relationship]
+Informally, a complexity class $\C$ specifies the upper bound on the hardness of the problems within, $\C$-hard specifies the lower bound and $\C$-complete exactly classifies the hardness. NPO-complete problems are the hardest according to the classification scale above. The next are exp-APX-complete problems and their only difference is that a feasible solution can always be found in polynomial time for exp-APX-complete problems. Completeness in these two classes implies inapproximiablity. Since the measure is computable in polynomial time, it cannot be larger than an exponential function of the input length. An exponential function is the worst possible bound on the performance ratio.

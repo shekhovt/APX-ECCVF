@@ -1,0 +1,197 @@
+%\usepackage{atbeginend}
+\newlength{\myskip}
+\setlength{\myskip}{\baselineskip}
+%
+\def\skipalgomyskip{\vspace{0\myskip}}
+\def\skipmyskip{\vspace{0.5\myskip}}
+
+\renewenvironment{enumerate}%
+  {\begin{list}{\arabic{enumi}.}%
+     {\topsep=0in\itemsep=0in\parsep=0pt\partopsep=0in\usecounter{enumi}}%
+   }{\end{list}}
+	
+\newcounter{itemi}	
+
+\renewenvironment{itemize}%
+  {\begin{list}{$\bullet$}%
+     {\topsep=0in\itemsep=0pt\parsep=0pt\partopsep=0in\usecounter{itemi}}%
+   }{\end{list}\addvspace{0pt}}
+
+%\newcommand{\sectionskip}{\vspace{0mm}}
+
+\raggedbottom
+%%% SPACE squeeze
+\topsep=0pt %space between first item and preceding paragraph
+\partopsep=0pt %extra space added to \topsep when environment starts a new paragraph.
+\itemsep=0pt % space between successive items.
+%\parskip=0pt
+
+%\setlength{\headsep}{0pt}
+\setlength{\tabcolsep}{0pt}
+%\setlength{\topmargin}{0pt}
+\arraycolsep = 1.2\arraycolsep
+%\topskip = 0pt
+\floatsep = 0.7\myskip % space left between floats
+%\textfloatsep = 4mm %space between last top float or first bottom float and the text
+\setlength{\textfloatsep}{12pt plus 1.0pt}
+\setlength{\dbltextfloatsep}{\textfloatsep}
+\setlength{\dblfloatsep}{\floatsep}
+\intextsep = 5mm %space left on top and bottom of an in-text float.
+\raggedbottom
+\abovecaptionskip = 0pt
+\belowcaptionskip = 0pt
+%\parskip=0pt
+%\setlength{\parsep}{0pt}
+%\setlength{\partopsep}{0pt}
+%lists
+%\topsep=0pt %space between first item and preceding paragraph
+%\partopsep=0pt %extra space added to \topsep when environment starts a new paragraph.
+\itemsep=0pt % space between successive items.
+%
+%ALLOW MANY FIGURES
+\renewcommand\floatpagefraction{1}
+\renewcommand\topfraction{1}
+\renewcommand\bottomfraction{1}
+\renewcommand\textfraction{0}   
+\setcounter{totalnumber}{50}
+\setcounter{topnumber}{50}
+\setcounter{bottomnumber}{50}
+%%%%
+\renewcommand{\textfraction}{0.01}
+\renewcommand{\floatpagefraction}{0.99}
+\renewcommand{\topfraction}{0.99}
+\renewcommand{\bottomfraction}{0.99}
+\renewcommand{\dblfloatpagefraction}{0.99}
+\renewcommand{\dbltopfraction}{0.99}
+\setcounter{totalnumber}{99}
+\setcounter{topnumber}{99}
+\setcounter{bottomnumber}{99}
+
+%\setlength{\algomargin}{0pt}
+\SetAlgoSkip{skipalgomyskip}
+\SetAlgoInsideSkip{}
+%\setlength{\interspaceboxrule}{0pt}
+%\setlength{\interspacetitleruled}{0pt}
+
+%%%%%%%%%%%%%%
+\makeatletter
+\let\corollary\@undefined
+%\let\c@corollary\@undefined
+\let\endcorollary\@undefined
+\let\definition\@undefined
+%\let\c@definition\@undefined
+\let\enddefinition\@undefined
+\let\proof\@undefined
+\let\endproof\@undefined
+\let\theorem\@undefined
+\let\c@theorem\@undefined
+\let\endtheorem\@undefined
+\let\lemma\@undefined
+%\let\c@lemma\@undefined
+\let\endlemma\@undefined
+%
+\let\example\@undefined
+\let\c@example\@undefined
+\let\endexample\@undefined
+\let\remark\@undefined
+%\let\c@remark\@undefined
+\let\endremark\@undefined
+\let\proposition\@undefined
+%\let\c@proposition\@undefined
+\let\endproposition\@undefined
+\let\property\@undefined
+\let\endproperty\@undefined
+\makeatother
+
+\usepackage{thmtools}
+
+\newtheoremstyle{tightItalic}% name
+  {0.5\myskip}%      Space above
+  {0\myskip}%      Space below
+  {}%         Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\itshape}% Thm head font
+  {.}%        Punctuation after thm head
+  { }%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\newtheoremstyle{tightBf}% name
+  {0.5\myskip}%      Space above
+  {0.5\myskip}%      Space below, 0 since amsart starts a paragraph
+  {}%         Body font
+  {}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\bf}% Thm head font
+  {.}%        Punctuation after thm head
+  {.5em}%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{definition}
+\theoremstyle{tightBf}
+\declaretheorem[style=tightBf,parent=section]{thm}
+\numberwithin{thm}{section}
+%\declaretheorem[name=Theorem,style=tightBf,parent=section]{theorem}
+\declaretheorem[style=tightBf,sibling=thm,name=Theorem]{theorem}
+\declaretheorem[style=tightBf,sibling=theorem,name=Lemma]{lemma}
+\declaretheorem[style=tightBf,sibling=theorem,name=Definition]{definition}
+\declaretheorem[style=tightBf,sibling=theorem,name=Corollary]{corollary}
+\declaretheorem[style=tightBf,sibling=theorem,name=Proposition]{proposition}
+\declaretheorem[style=tightBf,sibling=theorem,name=Statement]{statement}
+\declaretheorem[style=tightBf,sibling=theorem,name=Fact]{fact}
+%
+\declaretheorem[style=tightBf,parent=section,name=Example]{example}
+\numberwithin{example}{section}
+
+\declaretheorem[style=tightItalic,sibling=theorem,name=Remark]{remark}
+
+%\newtheorem{theorem}{Theorem}[section]
+%\numberwithin{theorem}{section}
+%\newtheorem*{theorem*}{Theorem}
+%%\newtheorem{corollary}[theorem]{Corollary}
+%\declaretheorem[sharecounter=theorem]{corollary}{Corollary}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem*{definition*}{Definition}
+%\newtheorem{statement}[theorem]{Statement}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{example}{Example}
+%\numberwithin{example}{section}
+%\newtheorem*{remark*}{Remark}
+%\newtheorem{remark}[theorem]{Remark}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem*{discussion}{Discussion}
+%\newtheorem*{property}{Property}
+%\numberwithin{property}{section}
+
+
+\theoremstyle{tightItalic}
+\newtheorem*{proof}{Proof}
+\BeforeEnd{proof}{\qed}
+\newtheorem*{proofsketch}{Proof Sketch}
+%\BeforeEnd{proofsketch}{\qed}
+%%
+%%section and subsection spacing
+%%
+%\makeatletter
+%\renewcommand\section{\@startsection {section}{1}{\z@}%
+%{2\myskip}%
+%{2\myskip}%
+%{\normalfont\Large\bfseries}}
+%
+%\renewcommand\subsection{\@startsection {subsection}{2}{\z@}%
+%{\myskip}%
+%{\myskip}%
+%{\flushleft\normalfont\bfseries}}
+%\makeatother
+
+%\makeatletter
+% \def\@endtheorem{\endtrivlist\@endpefalse }% OLD
+%\def\@endtheorem{\endtrivlist}% NEW
+%\makeatother
+
+\makeatletter
+%\setlength{\@fptop}{0pt}
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{10pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother

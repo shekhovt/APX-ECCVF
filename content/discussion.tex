@@ -1,0 +1,54 @@
+\section{Discussion}\label{sec:discussion}
+
+The algorithmic implications of our inapproximability have been discussed above. Here, we focus on the discussion of practical implications. 
+% ** Topic sentences to be added when there is enough space
+% On one hand, we show that the inapproximable formulation is unsuitable for tasks requiring approximation guarantee. On the other hand, we show that the lack of approximation guarantee does not prevent the model being applied to real world applications due to the lack of direct connection between complexity theory and practical application.
+An approximation guarantee is most needed when inference is used as a subroutine of a larger task. In structural learning, it is acceptable to have a constant factor approximation for the inference subroutine when efficient exact algorithms are not available. \citeauthor{finley2008training} proved that this constant factor approximation guarantee yields a multiplicative bound on the learning objective, providing a relative guarantee for the quality of the learned parameters~\cite{finley2008training}. An optimality guarantee is important, as the inference subroutine is called multiple times, and even a single poor approximation, which returns a not-so-bad worst violater, will lead to the early termination of structural learning algorithm. 
+
+However, despite having no approximation ratio guarantee, algorithms such as the extended roof duality algorithm for QPBO~\cite{rother2007optimizing} are still widely used. This gap between theory and application applies not only to our results but to all other complexity results as well. We list several key reasons for the potential lack of correspondence between theoretical complexity guarantees and practical performance.
+
+\textbf{Complexity results address the worst case scenario.} Our inapproximability result guarantees that for any polynomial time algorithm, there exists an input instance for which the algorithm will produce a very poor approximation. However, applications often do not encounter the worst case. Such is the case with the simplex algorithm, whose worst case complexity is exponential, yet it is widely used in practice. 
+
+% **  widely used vs considered the most efficient and most reliable linear programming algorithm in practice
+
+%Many algorithms can certify global optimality if they were able to solve the problem.
+
+%However, the average case is not addressed. It is widely known that the simplex algorithm, with a worst case exponential complexity, is considered the most efficient and most reliable linear programming algorithm in practice.
+
+\textbf{Objective function is not the final evaluation criterion.} In many image processing tasks, the final evaluation criterion is the number of pixels correctly labeled. The relation between the energy value and the accuracy is implicit. In many cases, a local optimum is good enough to produce a high labeling accuracy and a visually appealing labeling.
+
+\textbf{Other forms of optimality guarantee or indicator exist.} %The complexity other approximation measures besides multiplicative value approximation, such as additive value approximation~\cite{Kwisthout-11}, structure-approximation~\cite{Kwisthout-13}, rank-approximation~\cite{kwisthout2015tree}, and expectation-approximation~\cite{kwisthout2015tree}, remain open questions for energy minimization. 
+%
+Approximation measures in the distance of solutions or in the expectation of the objective value are likely to be prohibitive for energy minimization, as they are for Bayesian networks~\cite{Kwisthout-11,Kwisthout-13, kwisthout2015tree}.
+On the other hand, a family of energy minimization algorithms has the property of being {\em persistent} or {\em partial optimal}, meaning a subset of nodes have consistent labeling with the global optimal one~\cite{Boros:TR91-maxflow, BorosHammer01}. Rather than being an optimality guarantee, persistency is an optimality indicator. In the worst case, the set of persistent labeling could be empty, yet the percentage of persistent labeling over the all the nodes give us a notion of the algorithm's performance on this particular input instance. Persistency is also useful in reducing the size of the search space \cite{kohli2008partial, SSS-15-IRI}.
+
+% removed the singular and pluar form for indication of weak and strong persistency
+
+% ** cannot start with details and maybe this is not a good place to dig into the theory behind persistency
+
+% On the other hand, since~\cite{Boros:TR91-maxflow} efficiently solves the LP relaxation, it can certify global optimality in case the relaxed solution is integral for a given instance. Even if only a subset of variables are integral in the optimum relaxed solution it is still guaranteed that they are consistent with some (not fully known) globally optimal solution~\cite{BorosHammer01}. This property called persistency or partial optimality makes the method very useful in reducing the size of the problem. There are numerous extensions to this technique, \eg, \cite{kohli2008partial, SSS-15-IRI}.
+
+%
+%Other approximation measures besides multiplicative value approximation, such as additive value approximation~\cite{Kwisthout-11}, structure-approximation~\cite{Kwisthout-13}, rank-approximation~\cite{kwisthout2015tree} or expectation-approximation~\cite{kwisthout2015tree} are likely to be prohibitive for energy minimization as they are for Bayesian networks.
+
+%A family of energy minimization algorithms has the property of being {\em persistent} or {\em partial optimal}, which means that for a subset of nodes, the labeling is the same as in the optimal case or cases~\cite{Boros:TR91-maxflow, rother2007optimizing, kohli2008partial, shekhovtsov2015maximum}. Rather than being an optimality guarantee, persistency is an optimality indicator. In the worst case, the set of persistent labeling could be empty, yet the percentage of persistent labeling over the all the nodes give us a notion of the algorithm's performance on this particular input instance.
+
+% Even though connection of theoretical guarantee and practical performance is not strong, some tasks require optimality guarantees, especially when inference is used as a subroutine of a larger task. In structural learning, it is acceptable to have a constant factor approximation algorithm for the inference subroutine when efficient exact algorithms are not available. \citeauthor{finley2008training} proved that this constant factor approximation guarantee yields a multiplicative bound on the learning objective, providing a relative guarantee for the quality of the learned parameters~\cite{finley2008training}. An optimality guarantee is important, as the inference subroutine is called multiple times and even a single poor approximation, which returns a not-so-bad worst violater, will lead to the early termination of structural learning algorithm. 
+% ::: Add this in if the other paper is submitted.  It is shown in \cite{Authors16} that when such is the case, we should reformulate the learning objective to make the inference problem tractable.
+
+% Take away messages for practitioners
+% if you have time, test to find it out
+% if you don't, then don't formulate your problem this way
+
+
+% After going through dozens of QPBO citations, I found most paper use QPBO as a fundation to build their own algorithms or cite QPBO as an alternative method. The ones that use QPBO as their inference method would say 'it works well' or 'it produces fast and accurate approximation on blabla'. There are a few which say they have tried multiple algorithms, QPBO is not the best, so they adopt blabla'.
+
+% \par
+% \revisit Explain why optimization problems who's decision version is NP-complete are not necessarily NPO-complete.
+% {\gray
+% All NP-hard optimization problems have their decision version being NP-complete. And NPO-complete problems are the hardest problems in NPO and is only a subset of NP-hard optimization problems. Formally, the completeness in NP and NPO are defined on different reductions and the problems in both classes do not correspond to each other one-by-one.
+% % Karp vs AP
+% \par
+
+
+% In applications, it is preferable to formulate a real-world problem as a computational problem solvable in polynomial time. However, when the application requires a more complex model whose a global optimum is intractable, it is often satisfactory to solve the problem to a desired relative accuracy in the objective, \ie, reaching the optimum within a given ratio. Indeed, such algorithms exist such as the well-known Potts model can be approximated by alpha-expansion \cite{boykov2001approximate} within a constant factor of 2. In structural learning \cite{finley2008training} for example, it is acceptable to have a constant factor approximation algorithm for the inference oracle, also an instance of energy minimization, when efficient exact algorithms are not available. This is because the constant factor approximation for the inference oracle can yield a multiplicative bound on the learning objective, providing a relative guarantee for the quality of the learned parameters. In sum, the solution quality of structural learning depends on the approximation guarantees of the energy minimization subroutine. It is shown in cite{another eccv submission} that when such an efficient subroutine is impossible even in terms of constant ratio approximation, we should reformulate the learning objective to make the learning problem tractable.

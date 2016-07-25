@@ -1,0 +1,106 @@
+\section{Complexity for Subclass Problems} \label{sec:specialcases}
+
+The hardness of a discrete energy minimization problem depends on the graph structure, the interaction type and the label space. In this section, we classify some of the special cases of form (\ref{eq:1}) according to our complexity axis. This classification can be viewed as a reinterpretation of existing results from the literature in a unified framework.
+
+\subsection{Class PO (Global Optimum)}
+Polynomial time solvability may be achieved by considering a restricted subset of the input instances of the general case. There are two principally different restrictions: those restricting the {\em structure} of the problem, \ie, the graph $G$ and those restricting the type of allowed interactions, \ie, functions $f_{uv}$.
+%\begin{itemize}
+%    \item Structure restrictions: tree, bounded tree width, outer planar.
+%    \item Interaction restrictions: characterization, bsiubmodular, submodular, convex, mincut.
+%    \item Unary constraints and mixed pairwise-unary constraints.
+%\end{itemize}
+\paragraph{Structure Restrictions} When $G$ is a chain, problem~\eqref{eq:1} reduces to finding a shortest path in the trellis graph, a classical dynamic programming known, \eg, as Viterbi algorithm~\cite{wikipedia}. %When $G$ is a tree, the same DP principle applies: given a fixed state of a node the problem decouples into independent minimizations.
+To graphs of bounded tree-width the same dynamic programming principle applies: fixing all variables in a separator set decouples the problem into independent minimizations. For treewidth 1 the separators are just individual vertices and the problem is solved by a variant of DP. For higher treewidth the respective optimization procedure is known as junction tree decomposition~\cite{Lauritzen96}. A loop is a simple example of a treewidth 2 problem. However, for a treewidth $k$, the time complexity is exponential in $k$. Finally, when $G$ is an outer-planar graph (\ie, such that connecting all nodes to a new external node results in a planar graph) the problem can be solved by the method~\cite{Schraudolph-10}, which reduces it to a planar Ising model for which efficient algorithms exist~\cite{Shih-90}.
+%
+\paragraph{Interaction Restrictions}
+We review the known tractable classes in the order of increasing generality.
+Binary image segmentation with attractive interactions~\cite{Greig89} reduces to a minimum cut problem. More generally, quadratic pseudo-Boolean function $f$ is submodular iff its quadratic terms are non-positive, it is then known to be equivalent with finding a minimum cut in a corresponding network~\cite{Hammer:OR68}.
+For QPBO, the following dichotomy result has been proved.
+ \begin{theorem}[\citet{Cohen-04}]
+ Let L be a class of functions from $\{0, 1\}$ to $\Rationals$. Let $C_L$ be the
+ class of instances with functions from $L$.
+ \begin{enumerate}
+ \item Either every $f \in L$ is submodular and thus $C_L \in $ PO,
+ \item or $C_L$ encodes MAXCUT and hence is NP-hard.
+ \end{enumerate}
+ \end{theorem}
+\noindent This theorem means that with unrestricted graph structure and label space, the problem is in PO if and only if it is submodular\footnote{Assuming P $\neq$ NP}.
+\par
+For multi-label problems~\citet{Ishikawa03} proposed a reduction to minimum cut for problems with convex interactions, \ie, where $f_{uv}(x_u,x_v) = g_{uv}(x_u - x_v)$ and $g_{uv}$ is convex. % while~\cite{Hochbaum-2001-MRF} proposed directly an efficient algorithm for the case of .
+It is worth noting that in case when unary terms are convex as well the problem can be solved even more efficiently~\cite{Hochbaum-2001-MRF,Kolmogorov05primal-dualalgorithm}. %The construction by~\citet{Hochbaum-2001-MRF} 
+The same reduction~\cite{Ishikawa03} remains correct for a more general class of submodular multi-label problems. In modern terminology, component-wise minimum $x \wedge y$ and component-wise maximum $x \vee y$ of labelings $x$, $y$ are introduced. These operations define a lattice on the set of labelings. The function $f$ is called {\em submodular} on the lattice if $f(x \vee y) + f(x \wedge y) \leq f(x) + f(y)$. In the pairwise case, the condition becomes equivalent to that each $f_{uv}$ is submodular.
+Submodularity depends on the order of labels. \citet{DSchlesinger-07-permuted} proposed an algorithm to find a reordering in which the problem is submodular if one exists.
+ %Generalizing on operation $\vee$ and $\wedge$, a class of bisubmodular 
+%\revisit
+There have been many generalizations of multi-label submodular functions proposed which until the following result has been finally established:
+ \begin{theorem}[\citet{Thapper-12,Thapper-13}]
+ Let $D$ be an arbitrary finite set and $L$ a class of functions from $D$ to $\Rationals$. Let $C_L$ be the class of instances with functions from $L$.
+ \begin{enumerate}
+ \item Either every $f \in L$ satisfies a certain algebraic condition
+ and Basic LP relaxation (BLP) solves every instance from $C_L$,
+ \item or $C_L$ encodes MAXCUT and hence is NP-hard.
+ \end{enumerate}
+ \end{theorem}
+This result covers the following special cases (see~\cite{Thapper-13}): symmetric tournament pair, submodularity on arbitrary trees, submodularity on arbitrary lattices, skew bisubmodularity, bisubmodularity on arbitrary domains. It follows that all tractable problems with interaction restrictions has been characterized. Moreover, if the problem is tractable it can be solved by an LP relaxation technique.
+% %,  and in fact reads that
+% %\begin{align}
+% %\end{align}
+\paragraph{Mixed Restrictions}
+Although existing, the results here are quite rare. An example of mixed restrictions is a planar Ising model without unary terms (solvable by~\cite{Shih-90}). One more example is supermodular functions on bipartite graph (solvable by~\citet{DSchlesinger-07-permuted}).
+
+\paragraph{Applications} \revisit[replace the word application?]
+The solvable problems can be used to solve or approximate harder problems. Such, trees and planar problems are used in dual decomposition methods.  Binary submodular problems are used for finding an optimized crossover of two candidate multi-label solutions. Example of this technique, expansion-move algorithm achieves a constant approximation ration for Potts model. LP relaxation is a powerful technique that solves all tractable problems without structure restrictions and also provides approximation guarantees for certain problems in the APX class.
+
+
+% So is QPBO with submodular interactions. 
+% and starting from pseudo-Boolean case. Binary image segmentation with attractive constrains~\cite{Greig89} reduces to a minimum cut problem. In fact, QPBO can be always written as an extended to by negative weights minimum cut by selecting appropriate weights, but only in the case the weights are non-negative the problem is solvable (and has maximum flow dual). It turns out  
+%As mentioned earlier in case of $0$-$1$ variables the problem of optimizing QPBO is known to be solvable 
+
+% \revisit
+%
+%\par
+%Special cases in PO are the ones that are most studied. Their popularity is a result of not only their simplicity, but also their role as the foundation to solve harder problems. First, if the topological structure forms a tree, then global optimum can always be found in polynomial time through message passing with dynamic programming. Assuming arbitrary structure but limiting the the label space to be Boolean and the problem to be submodular (defined below), we can find the global optimum through graph-cut. The algorithm has low order polynomial complexity in theory and is shown to be very efficient in practice for computer vision problems. Despite that many multi-class (more than 2 labels) problems do not belong to PO, they can still be approximated by a series of binary ones. 
+%
+%\begin{definition}[\cite{rother2007optimizing}]
+%A binary (two-class) energy minimization problem is {\em submodular} if and only if $\forall{u,v\in\V}$
+%\begin{align} \label{eq:submodular}
+%f_{uv}(0, 1) + f_{uv}(1, 0) \geq f_{uv}(0, 0) + f_{uv}(1, 1)
+%\end{align}
+%\end{definition}
+%
+%Multi-class problems can in fact be in PO if we consider a totally ordered set as the label space, for instance, the set of consecutive integers. Making use of finite difference, Ishikawa \cite{ishikawa2003exact} has given an exact reduction to graph-cut from problems with convex priors with respect to a totally ordered label set:
+%
+%\begin{definition}[\cite{ishikawa2003exact}]
+%If for each edge $uv \in \E$, pairwise potential $f_{uv}(x_u,x_v)$ takes the form $c_uvg(x_u-x_v)$, where $c_uv$ is an edge dependent constant and $g(x)$ is a {\em convex function}, then problem \ref{eq:1} is called one with {\em convex priors}.
+%\end{definition}
+%
+%Note that the well-known Potts model is not a special case of this definition and the convexity here is defined on a discrete set. 
+
+\subsection{Class APX (Bounded Approximation)}
+
+Problems that have bounded approximation in polynomial time usually have certain restriction on the interaction type. The Potts model might be the simplest and most common way to enforce the smoothness of the labeling. Each pairwise interaction depends on whether the neighboring labellings are the same, \ie $f_{uv}(x_u,x_v) = c_uv\delta(x_u, x_v)$.  Boykov \etal~\cite{boykov2001approximate} shows a reduction to this problem from the NP-hard multiway cut, also known to be APX-complete \cite{ausiello1999complexity, dahlhaus1994complexity}. At the same time, they shows their constructed alpha-expansion algorithm is guaranteed to produce a factor 2 approximation within the global optimum. These prove that the Potts model is in APX but not in PO. However, their reduction from multiway cut is not an AP-reduction as it violates the third condition of AP-reducibility \footnote{See the \cref{sec:additonaldef} for the definition of AP-reduction. There is a workaround to satisfy the third condition by defining a proper mapping $\sigma$, but it is then not obvious how to satisfy the fifth condition.}. Therefore, it is still an open problem that whether the Potts model is as hard as multi-way cut in terms of approximation, or equivalently, APX-complete.
+
+Boykov \etal~\cite{boykov2001approximate} also shows their algorithm can approximate a more general problem, \ie metric labeling. The potentials are called {\em metric} if for arbitrary finite label space $\mathcal{L}$, the pairwise potentials satisfy
+\begin{align}
+    f_{uv}(\alpha, \beta) = 0 & \leftrightarrow \alpha = \beta, \\
+        f_{uv}(\alpha, \beta) & = f_{uv}(\beta, \alpha) \geq 0, \\
+        f_{uv}(\alpha, \beta) & \leq f_{uv}(\beta, \gamma) + f_{uv}(\beta, \gamma),
+\end{align}
+for any labels $\alpha$, $\beta$, $\gamma \in \mathcal{L}$ and any $uv \in \E$. Although their approximation algorithm has a bound on the performance ratio, the bound depends on the ratio of some potentials, a number that can grow exponentially large. For metric labeling with $k$ labels, Kleinberg \etal proposed a $O(\log k \log \log k)$-approximation algorithm. This bound is further improved to $O(\log k)$ by \citet{Chekuri:2005:LPF}. As the label size $k$ can at most be a polynomial of the input size $|x|$ \footnote{See the proof for \cref{C:label-approx} in \cref{pf:ClabelApprox}}, the bound on performance ratio is equivalent to $O(\log |x|)$, making metric labeling a problem in log-APX.
+
+
+% \footnote{The bound is obtained assuming all unary potentials are non-negative.}
+% \par \revisit These are approximation in expectation. How to address them?
+
+An interesting variant of the metric labeling is its truncated counterpart, in which an upper limit $M$ is set for the distance.  
+\par \revisit Truncated Max-of-Convex Models \url{http://arxiv.org/pdf/1512.07815.pdf}
+\par \revisit[P. Kumar: Rounding-based Moves for Metric Labeling: it seems to me that this paper has an approximation bound depending on the solution and is not very informative?]
+\cite{Kumar-11-improved}
+
+Another APX problem is logic MRF \cite{bach2015unifying}:
+
+\begin{align}
+    f(x) = \sum_i^n w_iC_i,
+\end{align}
+where each $C_i$ is a disjunctive clause involving a subset of Boolean variables $x$, and it takes 1 if it is satisfied, 0 otherwise. Each clause $C_i$ is assigned a non-negative weight. The goal is to find an assignment of $x$ to maximize $f(x)$. As disjunctive clauses can be converted into polynomials, this is essential a pseudo-Boolean optimization problem. But this is a special case of the general 2-label energy minimization as its polynomial basis span a subspace of the basis of the latter. It is shown that logic MRF is a special case of MAX-SAT, which admits a constant factor approximation algorithm in polynomial time. This implies that logic MRF is in APX. 
+

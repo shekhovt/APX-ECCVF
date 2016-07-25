@@ -1,0 +1,14 @@
+@article{10.2307/169636,
+ ISSN = {0030364X, 15265463},
+ URL = {http://www.jstor.org/stable/169636},
+ abstract = {This paper gives general conditions under which a collection of optimization problems, with the objective function and the constraint set depending on a parameter, has optimal solutions that are an isotone function of the parameter. Relating to this, we present a theory that explores and elaborates on the problem of minimizing a submodular function on a lattice.},
+ author = {Donald M. Topkis},
+ journal = {Operations Research},
+ number = {2},
+ pages = {305-321},
+ publisher = {INFORMS},
+ title = {Minimizing a Submodular Function on a Lattice},
+ volume = {26},
+ year = {1978}
+}
+
