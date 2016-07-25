@@ -2,7 +2,9 @@
 
 %proofs and additional corollaries
 
-Note for all proofs in this section, we represent the forward and reverse mappings in AP-reduction, as $\pi(\cdot)$ and $\sigma(\cdot,\cdot)$ instead of $\pi(\cdot,\cdot)$ and $\sigma(\cdot,\cdot,\cdot)$, since the mappings used here do not depend on the rational $r$ in \cref{def:AP-red}. Also, we assign integer values to Boolean functions: 0 for False and 1 for True.
+Note for all proofs in this section, we assign integer values to Boolean functions: 0 for False and 1 for True.
+
+% we represent the forward and reverse mappings in AP-reduction, as $\pi(\cdot)$ and $\sigma(\cdot,\cdot)$ instead of $\pi(\cdot,\cdot)$ and $\sigma(\cdot,\cdot,\cdot)$, since the mappings used here do not depend on the rational $r$ in \cref{def:AP-red}. Also,
 
 \subsection{General Case}
 
@@ -129,27 +131,6 @@ Therefore $(\pi,\sigma, 1)$ is an AP-reduction. As QPBO is exp-APX-complete and 
 
 The above construction also formally shows that the energy minimization problem can only become harder when having a larger labeling space, irrespective of the graph structure and the interaction type.
 
-The next result is used in Section~\ref{sec:apx}.
-\stepcounter{theorem}
-\begin{corollary} \label{C:label-approx}
-% ** decided to replace the original corollary with this one
-% this is actually a lemma instead of a corollary, however this corollary is already referred to in the main text
-An $O(\log k)$-approximation implies an $O(\log |x|)$-approximation for $k$-label energy minimization problems.
-\end{corollary}
-\begin{proof}
-Observe that an instance of the energy minimization problem \cref{eq:1} is completely specified by a set of all unary terms $f_u$ and pairwise terms $f_{uv}$. This defines a natural encoding scheme to describe an instance of an energy minimization problem with binary alphabet $\{0, 1\}$. Therefore, the input size
-\begin{align}
-|x| = O(k^2|V|^2).
-\end{align}
-Assume we have an r-approximation algorithm, and $r = O(\log k)$, then
-\begin{align}
-    r = O(\log k + \log |V|) = O(\log k|V|) = O(log|x|),
-\end{align}
-which implies an $O(\log |x|)$-approximation algorithm.
-
-\end{proof}
-
-
 % \ClabelApprox* \label{pf:ClabelApprox}
 % \begin{proof}
 % We prove by contradiction. First observe that to encode  $f_u(x_u)$, we require at least $|\V|*k$ entries, a number that can be at most polynomial in the input size for the problem instance to be recognized in polynomial time. Thus $k$ is at most polynomial in the input size as well. If there exist an approximation algorithm with ratio $r$ which is asymptotically smaller or equal to a polynomial in $k$, then it amounts
@@ -257,11 +238,16 @@ The inapproximability result of~\citet{Abdelbar-98} holds even when restricting 
 \par
 In the other direction, representing pairwise energy~\eqref{eq:1} as a Bayesian network may require to use factors of order up to $|V|$ composed of conditional probabilities of the form $p(x_i \mid x_j, x_k, \cdots )$ with the number of variables depending on the vertex degrees. It is seen that while the general problems are convertible, fixed-parameter classes (such as order and graph restrictions) differ significantly. In addition, the approximation ratio for probabilities translates to an absolute approximation (an additive bound) for energies. The next corollary of our main result illustrates this point.
 
-% \begin{corollary}\label{C:prob-approx}
-% It is NP-hard to approximate MAP in the value of probability~\eqref{p-approx-ratio} with any exponential ratio $\exp(r(n))$, where $r$ is polynomial.
-% \end{corollary}
+\begin{corollary}\label{C:prob-approx}
+It is NP-hard to approximate MAP in the value of probability~\eqref{p-approx-ratio} with any exponential ratio $\exp(r(n))$, where $r$ is polynomial.
+\end{corollary}
 
-\CprobApprox*
+% \begin{restatable}{corollary}{CprobApprox}\label{C:prob-approx}
+% It is NP-hard to find a solution $x^*$ to MAP such that $p(x^*)/p(x) < \exp(r(n))$ for any given polynomial $r$.
+% %\end{corollary}
+% \end{restatable}
+
+% \CprobApprox*
 \begin{proof}
 Recall that the probability $p(x)$ is given by the exponential map of the energy: $p(x) = \exp(-f(x))$. Assume for contradiction that there is a polynomial time algorithm $\A$ that finds solution $x$ and a polynomial $r(n) \geq 0$ for $n > 0$ such that
 \begin{align}
@@ -298,3 +284,25 @@ Note, this corollary provides a stronger inapproximability result for probabilit
 \end{remark}
 
 %  proof works not only for polynomial r(n), but any subexponential function, but larger than exp(poly) can not be computed in polynomial time, which means this problem is really inapproximable
+
+\section{Miscellaneous}
+
+This result is used in Section~\ref{sec:apx}.
+\begin{corollary} \label{C:label-approx}
+% ** decided to replace the original corollary with this one
+% this is actually a lemma instead of a corollary, however this corollary is already referred to in the main text
+An $O(\log k)$-approximation implies an $O(\log |x|)$-approximation for $k$-label energy minimization problems.
+\end{corollary}
+\begin{proof}
+Observe that an instance of the energy minimization problem \cref{eq:1} is completely specified by a set of all unary terms $f_u$ and pairwise terms $f_{uv}$. This defines a natural encoding scheme to describe an instance of an energy minimization problem with binary alphabet $\{0, 1\}$. Therefore, the input size
+\begin{align}
+|x| = O(k^2|V|^2).
+\end{align}
+Assume we have an r-approximation algorithm, and $r = O(\log k)$, then
+\begin{align}
+    r = O(\log k + \log |V|) = O(\log k|V|) = O(log|x|),
+\end{align}
+which implies an $O(\log |x|)$-approximation algorithm.
+
+\end{proof}
+

@@ -2,7 +2,7 @@
 
 \begin{figure}[b]
 \begin{center}
-   \includegraphics[width=1\linewidth]{figure/PlanarComplexity.pdf}
+   \includegraphics[width=1\linewidth]{figure/PlanarComplexity2.pdf}
 \end{center}
    \caption{Complexity for planar energy minimization problems. The ``general case'' implies no restrictions on the pairwise interaction type.  This paper shows that the third category of problems is not efficiently approximable.}
 \label{fig:planarcomp}
@@ -11,7 +11,7 @@
 Efficient algorithms for energy minimization have been found for special cases of 2-label planar graphs.  Examples include planar 2-label problems without unary terms and outerplanar 2-label problems (i.e., the graph structure remains planar after connecting to a common node)~\cite{Schraudolph-10}. 
 % ::: safe to omit - most everyone knows what a planar graph is
 % {\em Planar graphs} are graphs that can be drawn on the plane in such a way that its edges intersect only at their endpoints.
-Grid structures over image pixels naturally give rise to planar graphs in computer vision.  Given their frequency of use in this domain, it is natural to consider the complexity of more general cases involving planar graphs. Figure~\ref{fig:planarcomp} visualizes the current state of knowledge  of the complexity of energy minimization problems on planar graphs.  In this section, we prove that for the case of planar graphs with three or more labels, energy minimization is exp-APX-complete. This result is important because it significantly reduces the space of potentially efficient algorithms on planar graphs.  The approximibility of the general case for planar 2-label problems an open question.
+Grid structures over image pixels naturally give rise to planar graphs in computer vision.  Given their frequency of use in this domain, it is natural to consider the complexity of more general cases involving planar graphs. Figure~\ref{fig:planarcomp} visualizes the current state of knowledge  of the complexity of energy minimization problems on planar graphs.  In this section, we prove that for the case of planar graphs with three or more labels, energy minimization is exp-APX-complete. This result is important because it significantly reduces the space of potentially efficient algorithms on planar graphs.  The existence of constant ratio approximation for planar 2-label problems remains an open question \footnote{The planar 2-label problem in general is APX-hard, since it subsumes the APX problem planar vertex cover \cite{Bar-Yehuda:1982:AVC:800070.802205}.}.
 
 \begin{restatable}{theorem}{Tplanar}\label{th:planar}
 Planar 3-label energy minimization is exp-APX-complete.
@@ -22,9 +22,10 @@ Planar 3-label energy minimization is exp-APX-complete.
 (Full proof in \cref{sec:formalproof}).
 \begin{enumerate}
     \item We construct elementary gadgets to reduce any 3-label energy minimization problem to a planar one with polynomially many auxiliary nodes.
-    \item The above reduction defines an injective forward mapping and we define a surjective inverse mapping $\sigma$ to set up the two-way correspondence between the original problem and the reduced planar one.
-    \item We prove that such mappings build an AP-reduction, \ie, 3-label energy minimization $\leqAP$ planar 3-label energy minimization.
+    \item Together with an inverse mapping $\sigma$ that we defined, the above construction defines an AP-reduction, \ie, 3-label energy minimization $\leqAP$ planar 3-label energy minimization.
     \item Since 3-label energy minimization is exp-APX-complete (\cref{C:gen}) and all energy minimization problems are in exp-APX, we thereby conclude that planar 3-label energy minimization is exp-APX-complete.
+    % \item The above reduction defines an injective forward mapping and we define a surjective inverse mapping $\sigma$ to set up the two-way correspondence between the original problem and the reduced planar one.
+    % \item We prove that such mappings build an AP-reduction, \ie, 3-label energy minimization $\leqAP$ planar 3-label energy minimization.
 \end{enumerate}
 \end{proofsketch}
 \begin{restatable}{corollary}{Cplanark}\label{C:planark}
@@ -59,19 +60,6 @@ Our novel gadgets have three key properties {\em at the same time}: 1) they are 
    %\caption{{\sc UncrossCopy} } \label{fig:uncrosscopy}
 %\end{minipage}
 %\end{figure}
-\begin{figure}
-\centering
-\begin{tabular}{cc}
-\begin{tabular}{c}%
-\includegraphics[width=0.39\linewidth]{figure/Planar/Planar-1-crop.pdf}
-\end{tabular}&\ \ \ \ \ \ 
-\begin{tabular}{c}%
-\includegraphics[width=0.39\linewidth]{figure/Planar/Planar-2-crop.pdf}
-\end{tabular}\\
-{\sc Split} & {\sc UncrossCopy}
-\end{tabular}
-\caption{Gadgets to represent a 3-label variable as two 2-label variables ({\sc Split}) and to copy the values of two diagonal pairs of 2-label variables without edge crossing ({\sc UncrossCopy}).\label{fig:split}}
-\end{figure}
 
 % 
 The two gadgets used in our reduction are illustrated in Figure~\ref{fig:split}. A 3-label node can be encoded as a collection of 3 indicator variables with a one-hot constraint. In the figure, a solid colored circle denotes a 3-label node, and a solid colored rectangle denotes the equivalent node expressed with indicator variables (white circles).  For example, in Figure~\ref{fig:split}, $a=1$ corresponds to the blue node taking the first label value. The pairwise potentials (edges on the left part of the figures) can be viewed as edge costs between the indicator variables (black lines on the right), \eg, $f_{uv}(3, 2)$ is placed onto the edge between indicator $c$ and $e$ and is counted into the overall measure if and only if $c = e = 1$. In our gadgets, drawn edges represent zero cost while omitted edges represent positive infinity\footnote{A very large number will also serve the same purpose, \eg, take the sum of the absolute value of all energy terms and add 1. Therefore, we are not expanding the set of allowed energy terms to include $\infty$.}.  While the set of feasible solutions remains the same, the gadget encourages certain labeling relationships, which, if not satisfied, cause the overall measure to be infinity. Therefore, the encouraged relationships must be satisfied by any optimal solution. The two gadgets serves different purposes:
@@ -86,7 +74,21 @@ Thus $(d,f)$ encodes $a$, $(d,g)$ and $(e,g)$ both encode $b$ and $(e,f)$ encode
 
 \textsc{UncrossCopy} The values of two 2-label nodes are encouraged to be the same as their diagonal counterparts respectively (red to red, green to green) without crossing with each other. The orange nodes are intermediate nodes that pass on the values. All types of lines represent the same edge cost, which is 0. The color differences visualize the verification for each of the 4 possible states of two 2-label nodes.  For example, the cyan lines verify the case where the top-left (green) node takes the values (1, 0) and the top-right (red) node takes the value (0, 1).  It is clear that the encouraged solution is for the bottom-left (red) node to take the value (0, 1), and the bottom-right (green) node to take the value (1, 0).
 
-\begin{figure}
+\begin{figure}[t]
+\centering
+\begin{tabular}{cc}
+\begin{tabular}{c}%
+\includegraphics[width=0.39\linewidth]{figure/Planar/Planar-1-crop.pdf}
+\end{tabular}&\ \ \ \ \ \ 
+\begin{tabular}{c}%
+\includegraphics[width=0.39\linewidth]{figure/Planar/Planar-2-crop.pdf}
+\end{tabular}\\
+{\sc Split} & {\sc UncrossCopy}
+\end{tabular}
+\caption{Gadgets to represent a 3-label variable as two 2-label variables ({\sc Split}) and to copy the values of two diagonal pairs of 2-label variables without edge crossing ({\sc UncrossCopy}).\label{fig:split}}
+\end{figure}
+
+\begin{figure}[b]
 \begin{center}
    \includegraphics[trim={0 10.5cm 0 0}, clip, width=0.7\linewidth]{figure/Planar/Planar-3.pdf}
 \end{center}

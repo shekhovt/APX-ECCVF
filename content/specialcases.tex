@@ -18,14 +18,14 @@ Polynomial time solvability may be achieved by considering two principal restric
 
 \textbf{Structure Restrictions.} When $G$ is a chain, energy minimization
 % ~\eqref{eq:1}
-reduces to finding a shortest path in the trellis graph, which can be solved using a classical dynamic programming method known, \eg, as the Viterbi algorithm~\cite{forney1973viterbi}.
+reduces to finding a shortest path in the trellis graph, which can be solved using a classical dynamic programming (DP) method known, \eg, as the Viterbi algorithm~\cite{forney1973viterbi}.
 %the Viterbi algorithm~\cite{forney1973viterbi}.
 %::: get a better cite for viterbi.  do not cite wikipedia (ever).  you are not in 4th grade.
 %:::old text: a classical dynamic programming method known, \eg, as Viterbi algorithm~\cite{wikipedia}.
 %## What one can learn from wikipedia is that Viterbi was only onle of the gentelmen who have proposed such algorithms in different context
 %When $G$ is a tree, the same DP principle applies: given a fixed state of a node the problem decouples into independent minimizations.
-The same dynamic programming (DP) principle applies to graphs of bounded tree-width.  Fixing all variables in a separator set decouples the problem into independent optimization problems. For treewidth 1, the separators are just individual vertices and the problem is solved by a variant of DP~\cite{Pearl-88,SchlesingerHlavac2002}.
-For higher treewidth, the respective optimization procedure is known as junction tree decomposition~\cite{Lauritzen96}. A loop is a simple example of a treewidth 2 problem. However, for a treewidth $k$, the time complexity is exponential in $k$~\cite{Lauritzen96}.
+The same DP principle applies to graphs of bounded treewidth.  Fixing all variables in a separator set decouples the problem into independent optimization problems. For treewidth 1, the separators are just individual vertices and the problem is solved by a variant of DP~\cite{Pearl-88,SchlesingerHlavac2002}.
+For larger treewidth, the respective optimization procedure is known as the junction tree decomposition~\cite{Lauritzen96}. A loop is a simple example of a treewidth 2 problem. However, for a treewidth $k$ problem, the time complexity is exponential in $k$~\cite{Lauritzen96}.
 Finally, when $G$ is an outer-planar graph, the problem can be solved by the method of~\cite{Schraudolph-10}, which reduces it to a planar Ising model, for which efficient algorithms exist~\cite{Shih-90}.
 
 
@@ -68,9 +68,9 @@ The same reduction~\cite{Ishikawa03} remains correct for a more general class of
 % ** Can we introduce the order dependent nature before introducing component-wise minimum?
 In modern terminology, component-wise minimum $x \wedge y$ and component-wise maximum $x \vee y$ of complete labelings $x$, $y$ for all nodes are introduced. These operations depend on the {\em order of labels} and, in turn, define a lattice on the set of labelings. The function $f$ is called {\em submodular on the lattice} if $f(x \vee y) + f(x \wedge y) \leq f(x) + f(y)$ for all $x$, $y$~\cite{Topkis-78}.
 In the pairwise case, the condition can be simplified to the form of submodularity common in computer vision \cite{ramalingam2008exact}:
-\begin{align} \label{eq:submodular}
-f_{uv}(i, j+1) + f_{uv}(i+1, j) \geq f_{uv}(i, j) + f_{uv}(i+1, j+1).
-\end{align}
+% \begin{align} \label{eq:submodular}
+$f_{uv}(i, j+1) + f_{uv}(i+1, j) \geq f_{uv}(i, j) + f_{uv}(i+1, j+1).$
+% \end{align}
 In particular, it is easy to see that a convex $f_{uv}$ satisfies it~\cite{Ishikawa03}.
 %equivalent to that each $f_{uv}$ is submodular as defined in~\eqref{eq:submodular}.
 \citet{Kolmogorov-10} and \citet{Arora-12} proposed maxflow-like algorithms for higher order submodular energy minimization. 
@@ -141,7 +141,7 @@ LP relaxation also provides approximation guarantees for many problems~\cite{Kle
 
 \subsection{Class APX (Bounded Approximation)} \label{sec:apx}
 
-Problems that have bounded approximation in polynomial time usually have certain restriction on the interaction type. The Potts model may be the simplest and most common way to enforce the smoothness of the labeling. Each pairwise interaction depends on whether the neighboring labellings are the same, \ie $f_{uv}(x_u,x_v) = c_{uv}\delta(x_u, x_v)$.  Boykov \etal showed a reduction to this problem from the NP-hard multiway cut~\cite{boykov2001approximate}, also known to be APX-complete~\cite{ausiello1999complexity, dahlhaus1994complexity}. They also proved that their constructed alpha-expansion algorithm is guaranteed to produce a factor two approximation to the global optimum. These results prove that the Potts model is in APX but not in PO. However, their reduction from multiway cut is not an AP-reduction, as it violates the third condition of AP-reducibility. Therefore, it is still an open problem whether the Potts model is APX-complete.
+Problems that have bounded approximation in polynomial time usually have certain restriction on the interaction type. The Potts model may be the simplest and most common way to enforce the smoothness of the labeling. Each pairwise interaction depends on whether the neighboring labellings are the same, \ie $f_{uv}(x_u,x_v) = c_{uv}\delta(x_u, x_v)$.  Boykov \etal showed a reduction to this problem from the NP-hard multiway cut~\cite{boykov2001approximate}, also known to be APX-complete~\cite{ausiello1999complexity, dahlhaus1994complexity}. They also proved that their constructed alpha-expansion algorithm is a 2-approximate algorithm. These results prove that the Potts model is in APX but not in PO. However, their reduction from multiway cut is not an AP-reduction, as it violates the third condition of AP-reducibility. Therefore, it is still an open problem whether the Potts model is APX-complete.
 % removed footnote:
 %  \footnote{There is a workaround to satisfy the third condition by defining a proper mapping $\sigma$, but it is then not obvious how to satisfy the fifth condition.}.
 Boykov \etal also showed that their algorithm can approximate the more general problem of metric labeling~\cite{boykov2001approximate}. The energy is called {\em metric} if, for an arbitrary, finite label space $\mathcal{L}$, the pairwise interaction satisfies a) $ f_{uv}(\alpha, \beta) = 0$, b) $f_{uv}(\alpha, \beta) = f_{uv}(\beta, \alpha) \geq 0$, and c) $f_{uv}(\alpha, \beta) \leq f_{uv}(\beta, \gamma) + f_{uv}(\beta, \gamma)$,
